@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/aquamarine">
+
+    <Button
+        android:id="@+id/show_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="添加第二个" />
+
+    <RelativeLayout
+        android:layout_below="@id/show_two"
+        android:id="@+id/add_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
+
+</RelativeLayout>

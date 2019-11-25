@@ -1,0 +1,82 @@
+import groovy.xml.MarkupBuilder
+
+/**
+ * 生成版本信息
+ */
+
+ext {
+    versionCode = 10101
+    versionName = '1.0.1'
+    versionInfo = '第一个版本'
+    xmlFile = file('version.xml')
+    if (xmlFile != null && !xmlFile.exists()) {
+        xmlFile.createNewFile()
+    }
+}
+
+//定义task
+task writeXmlTask {
+    //读入输入流
+    inputs.property('versionCode', this.versionCode)
+    inputs.property('versionName', this.versionName)
+    inputs.property('versionInfo', this.versionInfo)
+    //定义输出流
+    outputs.files xmlFile
+    doLast {
+        def data = inputs.getProperties()
+        File file = outputs.files.getSingleFile()
+        def version =new VersionMsg(data)
+        def sw = new StringWriter()
+        def xmlBuilder = new MarkupBuilder(sw)
+        if (file.text != null && file.text.size() <= 0) {
+            xmlBuilder.releases {
+                release {
+                    versionCode = version.versionCode
+                    versionName = version.versionName
+                    versionInfo =version.versionInfo
+                }
+            }
+            file.withWriter { write -> write.append(sw.toString()) }
+        } else {
+            xmlBuilder.releases {
+                versionCode = version.versionCode
+                versionName = version.versionName
+                versionInfo = version.versionInfo
+            }
+            def lines = file.readLines()
+            def lengths = lines.size() - 1
+            file.withWriter { write ->
+                lines.eachWithIndex { String entry, int index ->
+                    if (index != lengths) {
+                        write.append(lines + '\r\n')
+                    } else {
+                        write.append('\r\n' + sw.toString() + '\r\n')
+                        write.append(lines.get(lengths))
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+class VersionMsg {
+    String versionCode
+    String versionName
+    String versionInfo
+}
+
+task readReleaseFile {
+    inputs.file this.xmlFile
+    doLast {
+        def file = inputs.files.getSingleFile()
+        println file.text
+    }
+}
+
+task testTask{
+    dependsOn writeXmlTask, readReleaseFile
+    doLast{
+        println '执行完成....'
+    }
+}

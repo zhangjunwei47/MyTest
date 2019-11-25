@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="false">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="top"
+                android:minHeight="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:titleMarginTop="15dp">
+
+                <ViewStub
+                    android:id="@+id/titleToolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </android.support.v7.widget.Toolbar>
+
+            <ViewStub
+                android:id="@+id/headerContentVS"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/slidingTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="#EEEEEE"
+            app:tl_divider_color="#1A000000"
+            app:tl_divider_padding="13dp"
+            app:tl_divider_width="1dp"
+            app:tl_indicator_color="#000000"
+            app:tl_indicator_height="1.5dp"
+            app:tl_indicator_width="3dp"
+            app:tl_indicator_width_equal_title="true"
+            app:tl_tab_padding="22dp"
+            app:tl_tab_space_equal="true"
+            app:tl_textSelectColor="#000000"
+            app:tl_textUnselectColor="#66000000"
+            app:tl_underline_color="#1A000000"
+            app:tl_underline_height="1dp" />
+    </android.support.design.widget.AppBarLayout>
+</merge>

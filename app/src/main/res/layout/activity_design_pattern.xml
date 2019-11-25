@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".designpattern.DesignPatternActivity">
+
+    <Button
+        android:id="@+id/singleton_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="单例模式"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/decorator_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="装饰者模式"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/singleton_btn" />
+
+
+    <Button
+        android:id="@+id/facade_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="外观模式"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/decorator_btn" />
+
+
+    <Button
+        android:id="@+id/prototype_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="原型模式"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/facade_btn" />
+
+    <Button
+        android:id="@+id/factory_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="工厂模式"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/prototype_btn" />
+
+
+</android.support.constraint.ConstraintLayout>

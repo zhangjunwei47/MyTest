@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             android:id="@+id/layout_flash_content"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:orientation="vertical">
+
+    <Button
+        android:id="@+id/beginbtn"
+        android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开始动画"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_live"
+        android:layout_width="0dp"
+        android:layout_height="104dp"
+        android:layout_marginTop="51dp"
+        android:background="@color/red"
+        app:layout_constraintTop_toBottomOf="@id/beginbtn"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <TextView
+            android:id="@+id/tv_live_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="“5G即将面向大众生活，惊不惊喜？”"
+            android:textColor="#FFFFFF"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_live_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="直播中"
+            app:layout_constraintTop_toBottomOf="@id/tv_live_title"
+            app:layout_constraintLeft_toLeftOf="@id/tv_live_title"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>
