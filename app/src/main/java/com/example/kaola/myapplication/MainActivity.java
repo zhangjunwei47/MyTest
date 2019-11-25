@@ -15,6 +15,7 @@ import com.example.kaola.myapplication.player.PlayerActivity;
 import com.example.kaola.myapplication.servicelife.ServiceLifeActivity;
 import com.example.kaola.myapplication.util.DataBaseTestUtil;
 import com.example.kaola.myapplication.util.UuidUtil;
+import com.kaolafm.module.update.TestDemo;
 import com.kaolafm.module.update.UpdateManager;
 import com.zc.test.R;
 
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             DataBaseTestUtil.testx();
         });
         findViewById(R.id.update_test_btn).setOnClickListener(v -> {
-            //new TestDemo().start(this);
+            new TestDemo().start(this);
         });
     }
 
