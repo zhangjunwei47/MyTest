@@ -13,7 +13,11 @@ public class UpdateConstant {
      */
     public static final String FILE_PATH = Environment.getExternalStorageDirectory().getPath();
 
-    public static final String FILE_APK_NAME = ".apk";
+    public static final String FILE_NAME_KRADIO = "kradio";
+
+    public static final String FILE_NAME_PLUGIN = "plugin";
+
+    public static final String FILE_NAME = "kradio_plugin.apk";
 
     public static final String BLANK_STR = "";
 

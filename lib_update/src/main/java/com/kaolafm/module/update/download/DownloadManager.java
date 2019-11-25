@@ -34,13 +34,14 @@ public class DownloadManager {
      */
     private IDownloadListener mIDownloadListener;
 
+    private String mPluginPath = UpdateConstant.FILE_PATH + File.separator + UpdateConstant.FILE_NAME_KRADIO + File.separator + UpdateConstant.FILE_NAME_PLUGIN;
+
     public DownloadManager() {
-        mStartPoint = getFileStart();
-        mDownloadUrl = getDownloadUrl();
+        initDownloadPath();
     }
 
     /**
-     * 设置现在监听
+     * 设置下载监听
      *
      * @param iDownloadListener
      */
@@ -49,20 +50,25 @@ public class DownloadManager {
     }
 
     /**
-     * 开始一个新的任务
+     * 开始任务
      *
      * @param url
      */
-    public void startNewDownload(String url) {
-        mDownloadUrl = url;
-        mStartPoint = 0;
+    public void startDownload(boolean isDownloadNew) {
+        mDownloadUrl = getDownloadUrl();
+        if (isDownloadNew) {
+            mStartPoint = 0;
+            saveDownloadPath();
+        } else {
+            mStartPoint = getFileStart();
+        }
         startDownload();
     }
 
     /**
-     * 开始一个下载任务
+     * 开始下载
      */
-    public void startDownload() {
+    private void startDownload() {
         Callback callback = new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -133,7 +139,7 @@ public class DownloadManager {
      * @return
      */
     private File getFile() {
-        File file = new File(UpdateConstant.FILE_PATH, "updatePlugin" + UpdateConstant.FILE_APK_NAME);
+        File file = new File(mPluginPath, UpdateConstant.FILE_NAME);
         return file;
     }
 
@@ -143,7 +149,7 @@ public class DownloadManager {
      * @return
      */
     private long getFileStart() {
-        File file = new File(UpdateConstant.FILE_PATH, "updatePlugin" + UpdateConstant.FILE_APK_NAME);
+        File file = new File(mPluginPath, UpdateConstant.FILE_NAME);
         return file.length();
     }
 
@@ -200,6 +206,31 @@ public class DownloadManager {
     private void notifyDownloadFail(int code, String errorMsg) {
         if (mIDownloadListener != null) {
             mIDownloadListener.fail(code, errorMsg);
+        }
+    }
+
+    private void saveDownloadPath() {
+        String path = mPluginPath + File.separator + UpdateConstant.FILE_NAME;
+        DownloadCacheInfoUtil.setDownloadPath(UpdateManager.mContext, path);
+        UpdateLog.d("下载插件路径为: " + path);
+    }
+
+
+    /**
+     * 初始化下载路径
+     */
+    private void initDownloadPath() {
+        String sdPath = UpdateConstant.FILE_PATH;
+        String kradioPath = sdPath + File.separator + UpdateConstant.FILE_NAME_KRADIO;
+        File file = new File(kradioPath);
+        if (!file.exists()) {
+            file.mkdir();
+        }
+
+        String pluginPath = kradioPath + File.separator + UpdateConstant.FILE_NAME_PLUGIN;
+        File file1 = new File(pluginPath);
+        if (!file1.exists()) {
+            file1.mkdir();
         }
     }
 

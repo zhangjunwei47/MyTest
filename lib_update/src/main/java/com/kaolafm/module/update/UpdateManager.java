@@ -35,6 +35,11 @@ public class UpdateManager {
 
     private ArrayList<IDownloadListener> mDownloadArrayList;
 
+    /**
+     * 缓存当前plugin信息
+     */
+    private PluginInfo mPluginInfo;
+
     private UpdateManager(Context context) {
         mContext = context;
         mDownloadManager = new DownloadManager();
@@ -186,6 +191,7 @@ public class UpdateManager {
         UpdateLog.d("没有缓存信息,开始新的下载");
         uiCallback(pluginInfo, iRequestDownloadInfoCallback);
         if (isDownloadNeedUserAgree(pluginInfo)) {
+            mPluginInfo = pluginInfo;
             UpdateLog.d("需要用户同意后, 下载");
             return;
         }
@@ -203,6 +209,7 @@ public class UpdateManager {
             UpdateLog.d("原来缓存的数据有问题, 重新下载");
             uiCallback(pluginInfo, iRequestDownloadInfoCallback);
             if (isDownloadNeedUserAgree(pluginInfo)) {
+                mPluginInfo = pluginInfo;
                 UpdateLog.d("需要用户同意后, 下载");
                 return;
             }
@@ -215,12 +222,13 @@ public class UpdateManager {
         UpdateLog.d("旧版本: " + oldVersion + " 新版本: " + newVersion);
         if (oldVersion.equals(newVersion)) {
             UpdateLog.d("升级信息版本相同, 继续下载");
-            mDownloadManager.startDownload();
+            mDownloadManager.startDownload(false);
         } else {
             UpdateLog.d("升级信息版本不相同, 清空数据, 开始新的下载");
             uiCallback(pluginInfo, iRequestDownloadInfoCallback);
             if (isDownloadNeedUserAgree(pluginInfo)) {
                 UpdateLog.d("需要用户同意后, 下载");
+                mPluginInfo = pluginInfo;
                 return;
             }
             startDownloadNewVersion(pluginInfo);
@@ -246,12 +254,20 @@ public class UpdateManager {
      * @param pluginInfo
      */
     private void startDownloadNewVersion(PluginInfo pluginInfo) {
+        UpdateLog.d("开始新下载");
         mDownloadManager.deleteOldFile(DownloadCacheInfoUtil.getDownloadPath(mContext));
         DownloadCacheInfoUtil.clearCacheData(mContext);
         DownloadCacheInfoUtil.setPluginInfo(mContext, pluginInfo);
-        mDownloadManager.startNewDownload(pluginInfo.getApkUrl());
+        mDownloadManager.startDownload(true);
     }
 
+    /**
+     * 开始下载
+     */
+    public void startDownloadNewVersion() {
+        UpdateLog.d("用户同意开始新下载");
+        startDownloadNewVersion(mPluginInfo);
+    }
 
     /**
      * 上报升级成功
@@ -316,7 +332,7 @@ public class UpdateManager {
         }
     }
 
-    private void notifyDownloadStatus(int state, long param1) {
+    private void notifyDownloadStatus(int state, Object param1) {
         ArrayList<IDownloadListener> tempDownloadList = (ArrayList<IDownloadListener>) mDownloadArrayList.clone();
         int size = tempDownloadList.size();
         for (int i = 0; i < size; i++) {
@@ -324,11 +340,11 @@ public class UpdateManager {
             if (downloadListener == null) {
                 continue;
             }
-            notify(downloadListener, state, param1);
+            notifyStatusChange(downloadListener, state, param1);
         }
     }
 
-    private void notify(IDownloadListener iDownloadListener, int state, long param1) {
+    private void notifyStatusChange(IDownloadListener iDownloadListener, int state, Object param1) {
         switch (state) {
             case UpdateConstant.DOWNLOAD_STATE_INVALID: {
 
@@ -347,7 +363,7 @@ public class UpdateManager {
             }
             break;
             case UpdateConstant.DOWNLOAD_STATE_FAIL: {
-                ThreadUtil.runUIThread(() -> iDownloadListener.fail((int) param1, ""));
+                ThreadUtil.runUIThread(() -> iDownloadListener.fail(0, (String) param1));
             }
             break;
             default:
@@ -381,7 +397,7 @@ public class UpdateManager {
         public void fail(int code, String message) {
             UpdateLog.d("fail download...");
             DownloadCacheInfoUtil.setDownloadState(UpdateManager.mContext, UpdateConstant.DOWNLOAD_STATE_FAIL);
-            notifyDownloadStatus(UpdateConstant.DOWNLOAD_STATE_FAIL, code);
+            notifyDownloadStatus(UpdateConstant.DOWNLOAD_STATE_FAIL, message);
         }
     };
 
