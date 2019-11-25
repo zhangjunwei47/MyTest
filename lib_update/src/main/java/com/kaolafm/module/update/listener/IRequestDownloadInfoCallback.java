@@ -9,5 +9,8 @@ public interface IRequestDownloadInfoCallback {
      */
     void pluginNeedDownload(boolean isMandatory, boolean isNeedShowToast, String toastMessage);
 
+    /**
+     * 没有插件需要升级
+     */
     void noPluginNeedDownload();
 }

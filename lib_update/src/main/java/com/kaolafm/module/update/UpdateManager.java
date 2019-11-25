@@ -358,30 +358,30 @@ public class UpdateManager {
     private IDownloadListener iDownloadListener = new IDownloadListener() {
         @Override
         public void start() {
-            DownloadCacheInfoUtil.setDownloadState(UpdateManager.mContext, UpdateConstant.DOWNLOAD_STATE_DOWNLOADING);
             UpdateLog.d("start download...: ");
-
+            DownloadCacheInfoUtil.setDownloadState(UpdateManager.mContext, UpdateConstant.DOWNLOAD_STATE_BEGIN);
+            notifyDownloadStatus(UpdateConstant.DOWNLOAD_STATE_BEGIN, 0);
         }
 
         @Override
         public void loading(int progress) {
-            UpdateLog.d("loading download..." + progress);
+            UpdateLog.i("loading download..." + progress);
+            DownloadCacheInfoUtil.setDownloadState(UpdateManager.mContext, UpdateConstant.DOWNLOAD_STATE_DOWNLOADING);
+            notifyDownloadStatus(UpdateConstant.DOWNLOAD_STATE_DOWNLOADING, progress);
         }
 
         @Override
         public void complete() {
-            DownloadCacheInfoUtil.setDownloadState(UpdateManager.mContext, UpdateConstant.DOWNLOAD_STATE_COMPLETE);
             UpdateLog.d("complete download...");
+            DownloadCacheInfoUtil.setDownloadState(UpdateManager.mContext, UpdateConstant.DOWNLOAD_STATE_COMPLETE);
+            notifyDownloadStatus(UpdateConstant.DOWNLOAD_STATE_COMPLETE, 0);
         }
 
         @Override
         public void fail(int code, String message) {
             UpdateLog.d("fail download...");
-        }
-
-        @Override
-        public void loadFail(String message) {
-            UpdateLog.d("loadFail download...");
+            DownloadCacheInfoUtil.setDownloadState(UpdateManager.mContext, UpdateConstant.DOWNLOAD_STATE_FAIL);
+            notifyDownloadStatus(UpdateConstant.DOWNLOAD_STATE_FAIL, code);
         }
     };
 

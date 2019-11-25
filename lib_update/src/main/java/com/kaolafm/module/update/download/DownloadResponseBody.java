@@ -17,12 +17,12 @@ import okio.Okio;
  */
 public class DownloadResponseBody extends ResponseBody {
     private Response originalResponse;
-    private IDownloadListener IDownloadListener;
+    private IDownloadListener mDownloadListener;
     private long oldPoint = 0;
 
-    public DownloadResponseBody(Response originalResponse, long startsPoint, IDownloadListener IDownloadListener) {
+    public DownloadResponseBody(Response originalResponse, long startsPoint, IDownloadListener iDownloadListener) {
         this.originalResponse = originalResponse;
-        this.IDownloadListener = IDownloadListener;
+        this.mDownloadListener = iDownloadListener;
         this.oldPoint = startsPoint;
     }
 
@@ -54,8 +54,8 @@ public class DownloadResponseBody extends ResponseBody {
             public long read(Buffer sink, long byteCount) throws IOException {
                 long bytesRead = super.read(sink, byteCount);
                 alreadyBytesRead += bytesRead == -1 ? 0 : bytesRead;
-                if (IDownloadListener != null) {
-                    IDownloadListener.loading((int) ((alreadyBytesRead + oldPoint) / (1024)));
+                if (mDownloadListener != null) {
+                    mDownloadListener.loading((int) ((alreadyBytesRead + oldPoint) / (1024)));
                 }
                 return bytesRead;
             }

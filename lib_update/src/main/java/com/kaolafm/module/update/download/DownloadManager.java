@@ -1,11 +1,10 @@
 package com.kaolafm.module.update.download;
 
-import android.util.Log;
-
 import com.kaolafm.module.update.UpdateManager;
 import com.kaolafm.module.update.listener.IDownloadListener;
 import com.kaolafm.module.update.utils.DownloadCacheInfoUtil;
 import com.kaolafm.module.update.utils.UpdateConstant;
+import com.kaolafm.module.update.utils.UpdateLog;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -68,7 +67,7 @@ public class DownloadManager {
             @Override
             public void onFailure(Call call, IOException e) {
                 notifyDownloadFail(-1, e.getMessage());
-                Log.d(UpdateConstant.TAG, "callback failure: " + e.getMessage());
+                UpdateLog.d("callback failure: " + e.getMessage());
             }
 
             @Override
@@ -87,7 +86,7 @@ public class DownloadManager {
      */
     private void downloadToFile(Response response) {
         long length = response.body().contentLength();
-        Log.d(UpdateConstant.TAG, "on Response read length = " + length);
+        UpdateLog.d("on Response read length = " + length);
         if (length == 0) {
             notifyDownloadComplete();
             return;
@@ -123,7 +122,7 @@ public class DownloadManager {
                     randomAccessFile.close();
                 }
             } catch (Exception e) {
-                Log.e(UpdateConstant.TAG, "download close file error = " + e.getMessage());
+                UpdateLog.e("download close file error = " + e.getMessage());
             }
         }
     }
@@ -208,6 +207,10 @@ public class DownloadManager {
      * 删除本地文件
      */
     public void deleteOldFile(String path) {
-        // TODO: 2019-11-21 删除就文件
+        UpdateLog.d("要删除的文件路径为: " + path);
+        File file = new File(path);
+        if (file.exists() && file.isFile()) {
+            file.delete();
+        }
     }
 }

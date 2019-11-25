@@ -24,8 +24,15 @@ public class DownloadCacheInfoUtil {
      */
     private static final String DOWNLOAD_PATH = "plugin_path";
 
-
+    /**
+     * 插件信息
+     */
     private static PluginInfo mPluginInfo;
+
+    /**
+     * 下载状态
+     */
+    private static int mDownloadState;
 
     /**
      * 获取SharedPreferences
@@ -85,9 +92,13 @@ public class DownloadCacheInfoUtil {
      * @param state
      */
     public static void setDownloadState(Context context, int state) {
+        if (mDownloadState == state) {
+            return;
+        }
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         editor.putInt(DOWNLOAD_STATE, state);
         editor.apply();
+        mDownloadState = state;
     }
 
     /**
@@ -96,7 +107,11 @@ public class DownloadCacheInfoUtil {
      * @param context
      */
     public static int getDownloadState(Context context) {
-        return getSharedPreferences(context).getInt(DOWNLOAD_STATE, UpdateConstant.DOWNLOAD_STATE_INVALID);
+        if (mDownloadState != -1) {
+            return mDownloadState;
+        }
+        mDownloadState = getSharedPreferences(context).getInt(DOWNLOAD_STATE, UpdateConstant.DOWNLOAD_STATE_INVALID);
+        return mDownloadState;
     }
 
     /**

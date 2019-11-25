@@ -23,9 +23,4 @@ public interface IDownloadListener {
      * 请求失败
      */
     void fail(int code, String message);
-
-    /**
-     * 下载过程中失败
-     */
-    void loadFail(String message);
 }
