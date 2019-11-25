@@ -1,6 +1,6 @@
 package com.kaolafm.module.update.download;
 
-import com.kaolafm.module.update.listener.DownloadListener;
+import com.kaolafm.module.update.listener.IDownloadListener;
 
 import java.io.IOException;
 
@@ -17,12 +17,12 @@ import okio.Okio;
  */
 public class DownloadResponseBody extends ResponseBody {
     private Response originalResponse;
-    private DownloadListener downloadListener;
+    private IDownloadListener IDownloadListener;
     private long oldPoint = 0;
 
-    public DownloadResponseBody(Response originalResponse, long startsPoint, DownloadListener downloadListener) {
+    public DownloadResponseBody(Response originalResponse, long startsPoint, IDownloadListener IDownloadListener) {
         this.originalResponse = originalResponse;
-        this.downloadListener = downloadListener;
+        this.IDownloadListener = IDownloadListener;
         this.oldPoint = startsPoint;
     }
 
@@ -54,8 +54,8 @@ public class DownloadResponseBody extends ResponseBody {
             public long read(Buffer sink, long byteCount) throws IOException {
                 long bytesRead = super.read(sink, byteCount);
                 alreadyBytesRead += bytesRead == -1 ? 0 : bytesRead;
-                if (downloadListener != null) {
-                    downloadListener.loading((int) ((alreadyBytesRead + oldPoint) / (1024)));
+                if (IDownloadListener != null) {
+                    IDownloadListener.loading((int) ((alreadyBytesRead + oldPoint) / (1024)));
                 }
                 return bytesRead;
             }

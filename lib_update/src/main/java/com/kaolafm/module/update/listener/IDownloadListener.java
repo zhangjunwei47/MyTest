@@ -3,7 +3,7 @@ package com.kaolafm.module.update.listener;
 /**
  * 下载状态listener
  */
-public interface DownloadListener {
+public interface IDownloadListener {
     /**
      * 开始下载
      */
@@ -17,7 +17,7 @@ public interface DownloadListener {
     /**
      * 下载完成
      */
-    void complete(String path);
+    void complete();
 
     /**
      * 请求失败

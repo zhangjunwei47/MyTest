@@ -3,7 +3,7 @@ package com.kaolafm.module.update.download;
 import android.util.Log;
 
 import com.kaolafm.module.update.UpdateManager;
-import com.kaolafm.module.update.listener.DownloadListener;
+import com.kaolafm.module.update.listener.IDownloadListener;
 import com.kaolafm.module.update.utils.DownloadCacheInfoUtil;
 import com.kaolafm.module.update.utils.UpdateConstant;
 
@@ -30,10 +30,23 @@ public class DownloadManager {
      */
     private String mDownloadUrl = UpdateConstant.BLANK_STR;
 
+    /**
+     * 下载监听
+     */
+    private IDownloadListener mIDownloadListener;
 
     public DownloadManager() {
         mStartPoint = getFileStart();
         mDownloadUrl = getDownloadUrl();
+    }
+
+    /**
+     * 设置现在监听
+     *
+     * @param iDownloadListener
+     */
+    public void setDownloadListener(IDownloadListener iDownloadListener) {
+        mIDownloadListener = iDownloadListener;
     }
 
     /**
@@ -54,7 +67,7 @@ public class DownloadManager {
         Callback callback = new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                downloadListener.fail(-1, e.getMessage());
+                notifyDownloadFail(-1, e.getMessage());
                 Log.d(UpdateConstant.TAG, "callback failure: " + e.getMessage());
             }
 
@@ -76,10 +89,10 @@ public class DownloadManager {
         long length = response.body().contentLength();
         Log.d(UpdateConstant.TAG, "on Response read length = " + length);
         if (length == 0) {
-            downloadListener.complete(getFile().getAbsolutePath());
+            notifyDownloadComplete();
             return;
         }
-        downloadListener.start();
+        notifyStart();
         InputStream inputStream = null;
         RandomAccessFile randomAccessFile = null;
         BufferedInputStream bufferedInputStream = null;
@@ -95,9 +108,9 @@ public class DownloadManager {
             while ((len = bufferedInputStream.read(bytes)) != -1) {
                 randomAccessFile.write(bytes, 0, len);
             }
-            downloadListener.complete(getFile().getAbsolutePath());
+            notifyDownloadComplete();
         } catch (Exception e) {
-            downloadListener.loadFail(e.getMessage());
+            notifyDownloadFail(-1, e.getMessage());
         } finally {
             try {
                 if (inputStream != null) {
@@ -158,7 +171,7 @@ public class DownloadManager {
         Interceptor interceptor = chain -> {
             Response response = chain.proceed(chain.request());
             return response.newBuilder()
-                    .body(new DownloadResponseBody(response, mStartPoint, downloadListener)).build();
+                    .body(new DownloadResponseBody(response, mStartPoint, mIDownloadListener)).build();
         };
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder().addNetworkInterceptor(interceptor);
@@ -167,35 +180,29 @@ public class DownloadManager {
         call.enqueue(callback);
     }
 
-
-    private DownloadListener downloadListener = new DownloadListener() {
-        @Override
-        public void start() {
-            DownloadCacheInfoUtil.setDownloadState(UpdateManager.mContext, UpdateConstant.DOWNLOAD_STATE_DOWNLOADING);
-            Log.d(UpdateConstant.TAG, "start download...: ");
+    private void notifyStart() {
+        if (mIDownloadListener != null) {
+            mIDownloadListener.start();
         }
+    }
 
-        @Override
-        public void loading(int progress) {
-            Log.d(UpdateConstant.TAG, "loading download..." + progress);
+    private void notifyDownloading(int progress) {
+        if (mIDownloadListener != null) {
+            mIDownloadListener.loading(progress);
         }
+    }
 
-        @Override
-        public void complete(String path) {
-            DownloadCacheInfoUtil.setDownloadState(UpdateManager.mContext, UpdateConstant.DOWNLOAD_STATE_COMPLETE);
-            Log.d(UpdateConstant.TAG, "complete download...");
+    private void notifyDownloadComplete() {
+        if (mIDownloadListener != null) {
+            mIDownloadListener.complete();
         }
+    }
 
-        @Override
-        public void fail(int code, String message) {
-            Log.d(UpdateConstant.TAG, "fail download...");
+    private void notifyDownloadFail(int code, String errorMsg) {
+        if (mIDownloadListener != null) {
+            mIDownloadListener.fail(code, errorMsg);
         }
-
-        @Override
-        public void loadFail(String message) {
-            Log.d(UpdateConstant.TAG, "loadFail download...");
-        }
-    };
+    }
 
     /**
      * 删除本地文件

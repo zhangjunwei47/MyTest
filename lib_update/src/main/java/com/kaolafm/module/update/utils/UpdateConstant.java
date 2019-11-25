@@ -60,6 +60,7 @@ public class UpdateConstant {
     public static final int DOWNLOAD_STATE_BEGIN = 1;
     public static final int DOWNLOAD_STATE_DOWNLOADING = 2;
     public static final int DOWNLOAD_STATE_COMPLETE = 3;
+    public static final int DOWNLOAD_STATE_FAIL = 4;
 
     /**
      * 可下载插件最小支持空间 50M

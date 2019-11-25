@@ -4,15 +4,18 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.kaolafm.module.update.download.DownloadManager;
+import com.kaolafm.module.update.listener.IDownloadListener;
 import com.kaolafm.module.update.listener.IRequestDownloadInfoCallback;
 import com.kaolafm.module.update.listener.RequestCallback;
 import com.kaolafm.module.update.modle.PluginInfo;
 import com.kaolafm.module.update.network.RequestManager;
 import com.kaolafm.module.update.utils.DownloadCacheInfoUtil;
+import com.kaolafm.module.update.utils.ThreadUtil;
 import com.kaolafm.module.update.utils.UpdateConditionUtil;
 import com.kaolafm.module.update.utils.UpdateConstant;
 import com.kaolafm.module.update.utils.UpdateLog;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -30,10 +33,14 @@ public class UpdateManager {
      */
     private RequestManager mRequestManager;
 
+    private ArrayList<IDownloadListener> mDownloadArrayList;
+
     private UpdateManager(Context context) {
         mContext = context;
         mDownloadManager = new DownloadManager();
+        mDownloadManager.setDownloadListener(iDownloadListener);
         mRequestManager = new RequestManager();
+        mDownloadArrayList = new ArrayList<>();
     }
 
     public static UpdateManager getInstance(Context context) {
@@ -286,5 +293,96 @@ public class UpdateManager {
             }
         });
     }
+
+    /**
+     * 添加下载状态监听
+     *
+     * @param downloadListener
+     */
+    public void addDownloadStatusListener(IDownloadListener downloadListener) {
+        if (!mDownloadArrayList.contains(downloadListener)) {
+            mDownloadArrayList.add(downloadListener);
+        }
+    }
+
+    /**
+     * 删除下载状态监听
+     *
+     * @param downloadListener
+     */
+    public void removeDownloadStatusListener(IDownloadListener downloadListener) {
+        if (mDownloadArrayList.contains(downloadListener)) {
+            mDownloadArrayList.remove(downloadListener);
+        }
+    }
+
+    private void notifyDownloadStatus(int state, long param1) {
+        ArrayList<IDownloadListener> tempDownloadList = (ArrayList<IDownloadListener>) mDownloadArrayList.clone();
+        int size = tempDownloadList.size();
+        for (int i = 0; i < size; i++) {
+            IDownloadListener downloadListener = tempDownloadList.get(i);
+            if (downloadListener == null) {
+                continue;
+            }
+            notify(downloadListener, state, param1);
+        }
+    }
+
+    private void notify(IDownloadListener iDownloadListener, int state, long param1) {
+        switch (state) {
+            case UpdateConstant.DOWNLOAD_STATE_INVALID: {
+
+            }
+            break;
+            case UpdateConstant.DOWNLOAD_STATE_BEGIN: {
+                ThreadUtil.runUIThread(() -> iDownloadListener.start());
+            }
+            break;
+            case UpdateConstant.DOWNLOAD_STATE_DOWNLOADING: {
+                ThreadUtil.runUIThread(() -> iDownloadListener.loading((int) param1));
+            }
+            break;
+            case UpdateConstant.DOWNLOAD_STATE_COMPLETE: {
+                ThreadUtil.runUIThread(() -> iDownloadListener.complete());
+            }
+            break;
+            case UpdateConstant.DOWNLOAD_STATE_FAIL: {
+                ThreadUtil.runUIThread(() -> iDownloadListener.fail((int) param1, ""));
+            }
+            break;
+            default:
+                break;
+        }
+    }
+
+    private IDownloadListener iDownloadListener = new IDownloadListener() {
+        @Override
+        public void start() {
+            DownloadCacheInfoUtil.setDownloadState(UpdateManager.mContext, UpdateConstant.DOWNLOAD_STATE_DOWNLOADING);
+            UpdateLog.d("start download...: ");
+
+        }
+
+        @Override
+        public void loading(int progress) {
+            UpdateLog.d("loading download..." + progress);
+        }
+
+        @Override
+        public void complete() {
+            DownloadCacheInfoUtil.setDownloadState(UpdateManager.mContext, UpdateConstant.DOWNLOAD_STATE_COMPLETE);
+            UpdateLog.d("complete download...");
+        }
+
+        @Override
+        public void fail(int code, String message) {
+            UpdateLog.d("fail download...");
+        }
+
+        @Override
+        public void loadFail(String message) {
+            UpdateLog.d("loadFail download...");
+        }
+    };
 
 }
