@@ -1,10 +1,10 @@
 package com.kaolafm.module.update;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.kaolafm.module.update.listener.IRequestDownloadInfoCallback;
+import com.kaolafm.module.update.utils.UpdateLog;
 
 public class TestDemo {
 
@@ -12,7 +12,9 @@ public class TestDemo {
         boolean isHasDown = UpdateManager.getInstance(context).isHasDownloadedPlugin();
         if (isHasDown) {
             String path = UpdateManager.getInstance(context).getDownloadedPluginPath();
-            Log.e("logx", "xxxxxx 加载路径 = " + path);
+            UpdateLog.d("加载路径 = " + path);
+            UpdateManager.getInstance(context).reportUpdateSuccess();
+            UpdateManager.getInstance(context).loadPluginSuccess();
             //加载插件
         } else {
             if (UpdateManager.getInstance(context).isHasConditionRequestUpdateInfo()) {
@@ -24,7 +26,6 @@ public class TestDemo {
                             return;
                         }
                         //进入首页
-
                         if (isNeedShowToast) {
                             Toast.makeText(context, toastMessage, Toast.LENGTH_LONG).show();
                         }

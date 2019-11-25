@@ -32,7 +32,7 @@ public class DownloadCacheInfoUtil {
     /**
      * 下载状态
      */
-    private static int mDownloadState;
+    private static int mDownloadState = -1;
 
     /**
      * 获取SharedPreferences

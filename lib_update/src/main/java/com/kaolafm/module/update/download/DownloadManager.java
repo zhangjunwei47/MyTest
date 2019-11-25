@@ -34,7 +34,7 @@ public class DownloadManager {
      */
     private IDownloadListener mIDownloadListener;
 
-    private String mPluginPath = UpdateConstant.FILE_PATH + File.separator + UpdateConstant.FILE_NAME_KRADIO + File.separator + UpdateConstant.FILE_NAME_PLUGIN;
+    private String mPluginPath = UpdateConstant.FILE_PATH + File.separator + UpdateConstant.PATH_NAME_KRADIO + File.separator + UpdateConstant.PATH_NAME_PLUGIN;
 
     public DownloadManager() {
         initDownloadPath();
@@ -104,6 +104,7 @@ public class DownloadManager {
 
         byte[] bytes = new byte[2048];
         int len = 0;
+        boolean isDownloadSuccess = false;
         try {
             inputStream = response.body().byteStream();
             bufferedInputStream = new BufferedInputStream(inputStream);
@@ -113,7 +114,7 @@ public class DownloadManager {
             while ((len = bufferedInputStream.read(bytes)) != -1) {
                 randomAccessFile.write(bytes, 0, len);
             }
-            notifyDownloadComplete();
+            isDownloadSuccess = true;
         } catch (Exception e) {
             notifyDownloadFail(-1, e.getMessage());
         } finally {
@@ -130,6 +131,9 @@ public class DownloadManager {
             } catch (Exception e) {
                 UpdateLog.e("download close file error = " + e.getMessage());
             }
+            if (isDownloadSuccess) {
+                notifyDownloadComplete();
+            }
         }
     }
 
@@ -139,7 +143,7 @@ public class DownloadManager {
      * @return
      */
     private File getFile() {
-        File file = new File(mPluginPath, UpdateConstant.FILE_NAME);
+        File file = new File(mPluginPath, UpdateConstant.FILE_TEMP_NAME);
         return file;
     }
 
@@ -149,7 +153,7 @@ public class DownloadManager {
      * @return
      */
     private long getFileStart() {
-        File file = new File(mPluginPath, UpdateConstant.FILE_NAME);
+        File file = new File(mPluginPath, UpdateConstant.FILE_TEMP_NAME);
         return file.length();
     }
 
@@ -210,7 +214,7 @@ public class DownloadManager {
     }
 
     private void saveDownloadPath() {
-        String path = mPluginPath + File.separator + UpdateConstant.FILE_NAME;
+        String path = mPluginPath + File.separator + UpdateConstant.FILE_TEMP_NAME;
         DownloadCacheInfoUtil.setDownloadPath(UpdateManager.mContext, path);
         UpdateLog.d("下载插件路径为: " + path);
     }
@@ -221,13 +225,13 @@ public class DownloadManager {
      */
     private void initDownloadPath() {
         String sdPath = UpdateConstant.FILE_PATH;
-        String kradioPath = sdPath + File.separator + UpdateConstant.FILE_NAME_KRADIO;
+        String kradioPath = sdPath + File.separator + UpdateConstant.PATH_NAME_KRADIO;
         File file = new File(kradioPath);
         if (!file.exists()) {
             file.mkdir();
         }
 
-        String pluginPath = kradioPath + File.separator + UpdateConstant.FILE_NAME_PLUGIN;
+        String pluginPath = kradioPath + File.separator + UpdateConstant.PATH_NAME_PLUGIN;
         File file1 = new File(pluginPath);
         if (!file1.exists()) {
             file1.mkdir();
@@ -242,6 +246,20 @@ public class DownloadManager {
         File file = new File(path);
         if (file.exists() && file.isFile()) {
             file.delete();
+        }
+    }
+
+    /**
+     * 重命名file
+     */
+    public void renameDownloadFile() {
+        UpdateLog.d("重命名文件");
+        String path = DownloadCacheInfoUtil.getDownloadPath(UpdateManager.mContext);
+        String pluginName = mPluginPath + File.separator + UpdateConstant.FILE_NAME;
+        File file = new File(path);
+        File pluginFile = new File(pluginName);
+        if (file.exists()) {
+            file.renameTo(pluginFile);
         }
     }
 }

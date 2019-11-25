@@ -167,7 +167,7 @@ public class UpdateManager {
      */
     private boolean hasCacheDownloadingFile() {
         int downloadState = DownloadCacheInfoUtil.getDownloadState(mContext);
-        return downloadState == UpdateConstant.DOWNLOAD_STATE_DOWNLOADING;
+        return downloadState == UpdateConstant.DOWNLOAD_STATE_DOWNLOADING || downloadState == UpdateConstant.DOWNLOAD_STATE_BEGIN;
     }
 
     /**
@@ -273,6 +273,7 @@ public class UpdateManager {
      * 上报升级成功
      */
     public void reportUpdateSuccess() {
+        UpdateLog.d("上报更新成功");
         HashMap<String, String> tempHashMap = new HashMap<>();
         tempHashMap.put(UpdateConstant.KEY_UPDATE_STATUS, UpdateConstant.UPDATE_CODE_SUCCESS);
         mRequestManager.reportUpdateResultState(tempHashMap, new RequestCallback() {
@@ -294,6 +295,7 @@ public class UpdateManager {
      * @param errorCode
      */
     public void reportUpdateError(String errorCode) {
+        UpdateLog.d("上报更新失败: " + errorCode);
         HashMap<String, String> tempHashMap = new HashMap<>();
         tempHashMap.put(UpdateConstant.KEY_UPDATE_STATUS, UpdateConstant.UPDATE_CODE_ERROR);
         tempHashMap.put(UpdateConstant.KEY_ERROR_EVENT_CODE, errorCode);
@@ -308,6 +310,13 @@ public class UpdateManager {
 
             }
         });
+    }
+
+    /**
+     * 加载插件完成
+     */
+    public void loadPluginSuccess() {
+        DownloadCacheInfoUtil.clearCacheData(mContext);
     }
 
     /**
@@ -389,6 +398,8 @@ public class UpdateManager {
         @Override
         public void complete() {
             UpdateLog.d("complete download...");
+            // TODO: 2019-11-25 检验文件是否合法
+            // TODO: 2019-11-25 重命名文件
             DownloadCacheInfoUtil.setDownloadState(UpdateManager.mContext, UpdateConstant.DOWNLOAD_STATE_COMPLETE);
             notifyDownloadStatus(UpdateConstant.DOWNLOAD_STATE_COMPLETE, 0);
         }
