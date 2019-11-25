@@ -14,34 +14,12 @@ public class FileDigestUtils {
      * @param data
      *            Data to digest
      * @return MD5 digest
-     */
-    public static byte[] md5(final byte[] data) {
-        return getMd5Digest().digest(data);
-    }
-
-    /**
-     * Calculates the MD5 digest and returns the value as a 16 element <code>byte[]</code>.
-     *
-     * @param data
-     *            Data to digest
-     * @return MD5 digest
      * @throws IOException
      *             On error reading from the stream
      * @since 1.4
      */
     public static byte[] md5(final InputStream data) throws IOException {
         return digest(getMd5Digest(), data);
-    }
-
-    /**
-     * Calculates the MD5 digest and returns the value as a 32 character hex string.
-     *
-     * @param data
-     *            Data to digest
-     * @return MD5 digest as a hex string
-     */
-    public static String md5Hex(final byte[] data) {
-        return Hex.encodeHexString(md5(data));
     }
 
     /**

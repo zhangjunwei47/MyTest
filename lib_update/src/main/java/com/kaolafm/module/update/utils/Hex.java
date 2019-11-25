@@ -17,8 +17,6 @@
 
 package com.kaolafm.module.update.utils;
 
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 
 
 /**
@@ -56,18 +54,6 @@ public class Hex {
         return encodeHex(data, true);
     }
 
-    /**
-     * Converts a byte buffer into an array of characters representing the hexadecimal values of each byte in order. The
-     * returned array will be double the length of the passed array, as it takes two characters to represent any given
-     * byte.
-     *
-     * @param data a byte buffer to convert to Hex characters
-     * @return A char[] containing lower-case hexadecimal characters
-     * @since 1.11
-     */
-    public static char[] encodeHex(final ByteBuffer data) {
-        return encodeHex(data, true);
-    }
 
     /**
      * Converts an array of bytes into an array of characters representing the hexadecimal values of each byte in order.
@@ -80,20 +66,6 @@ public class Hex {
      * @since 1.4
      */
     public static char[] encodeHex(final byte[] data, final boolean toLowerCase) {
-        return encodeHex(data, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER);
-    }
-
-    /**
-     * Converts a byte buffer into an array of characters representing the hexadecimal values of each byte in order. The
-     * returned array will be double the length of the passed array, as it takes two characters to represent any given
-     * byte.
-     *
-     * @param data        a byte buffer to convert to Hex characters
-     * @param toLowerCase <code>true</code> converts to lowercase, <code>false</code> to uppercase
-     * @return A char[] containing hexadecimal characters in the selected case
-     * @since 1.11
-     */
-    public static char[] encodeHex(final ByteBuffer data, final boolean toLowerCase) {
         return encodeHex(data, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER);
     }
 
@@ -120,21 +92,6 @@ public class Hex {
     }
 
     /**
-     * Converts a byte buffer into an array of characters representing the hexadecimal values of each byte in order. The
-     * returned array will be double the length of the passed array, as it takes two characters to represent any given
-     * byte.
-     *
-     * @param byteBuffer a byte buffer to convert to Hex characters
-     * @param toDigits   the output alphabet (must be at least 16 characters)
-     * @return A char[] containing the appropriate characters from the alphabet For best results, this should be either
-     *         upper- or lower-case hex.
-     * @since 1.11
-     */
-    protected static char[] encodeHex(final ByteBuffer byteBuffer, final char[] toDigits) {
-        return encodeHex(toByteArray(byteBuffer), toDigits);
-    }
-
-    /**
      * Converts an array of bytes into a String representing the hexadecimal values of each byte in order. The returned
      * String will be double the length of the passed array, as it takes two characters to represent any given byte.
      *
@@ -146,50 +103,4 @@ public class Hex {
         return new String(encodeHex(data));
     }
 
-    /**
-     * Converts an array of bytes into a String representing the hexadecimal values of each byte in order. The returned
-     * String will be double the length of the passed array, as it takes two characters to represent any given byte.
-     *
-     * @param data        a byte[] to convert to Hex characters
-     * @param toLowerCase <code>true</code> converts to lowercase, <code>false</code> to uppercase
-     * @return A String containing lower-case hexadecimal characters
-     * @since 1.11
-     */
-    public static String encodeHexString(final byte[] data, final boolean toLowerCase) {
-        return new String(encodeHex(data, toLowerCase));
-    }
-
-    /**
-     * Converts a byte buffer into a String representing the hexadecimal values of each byte in order. The returned
-     * String will be double the length of the passed array, as it takes two characters to represent any given byte.
-     *
-     * @param data a byte buffer to convert to Hex characters
-     * @return A String containing lower-case hexadecimal characters
-     * @since 1.11
-     */
-    public static String encodeHexString(final ByteBuffer data) {
-        return new String(encodeHex(data));
-    }
-
-    /**
-     * Converts a byte buffer into a String representing the hexadecimal values of each byte in order. The returned
-     * String will be double the length of the passed array, as it takes two characters to represent any given byte.
-     *
-     * @param data        a byte buffer to convert to Hex characters
-     * @param toLowerCase <code>true</code> converts to lowercase, <code>false</code> to uppercase
-     * @return A String containing lower-case hexadecimal characters
-     * @since 1.11
-     */
-    public static String encodeHexString(final ByteBuffer data, final boolean toLowerCase) {
-        return new String(encodeHex(data, toLowerCase));
-    }
-
-    private static byte[] toByteArray(final ByteBuffer byteBuffer) {
-        if (byteBuffer.hasArray()) {
-            return byteBuffer.array();
-        }
-        final byte[] byteArray = new byte[byteBuffer.remaining()];
-        byteBuffer.get(byteArray);
-        return byteArray;
-    }
 }
