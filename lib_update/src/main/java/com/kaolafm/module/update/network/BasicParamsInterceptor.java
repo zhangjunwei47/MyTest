@@ -2,6 +2,8 @@ package com.kaolafm.module.update.network;
 
 import android.text.TextUtils;
 
+import com.kaolafm.module.update.utils.UpdateConstant;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -118,10 +120,11 @@ public class BasicParamsInterceptor implements Interceptor {
         try {
             final RequestBody copy = request;
             final Buffer buffer = new Buffer();
-            if (copy != null)
+            if (copy != null) {
                 copy.writeTo(buffer);
-            else
-                return "";
+            } else {
+                return UpdateConstant.BLANK_STR;
+            }
             return buffer.readUtf8();
         } catch (final IOException e) {
             return "did not work";
