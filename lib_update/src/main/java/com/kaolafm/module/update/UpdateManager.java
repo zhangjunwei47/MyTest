@@ -10,11 +10,14 @@ import com.kaolafm.module.update.listener.RequestCallback;
 import com.kaolafm.module.update.modle.PluginInfo;
 import com.kaolafm.module.update.network.RequestManager;
 import com.kaolafm.module.update.utils.DownloadCacheInfoUtil;
+import com.kaolafm.module.update.utils.FileDigestUtils;
 import com.kaolafm.module.update.utils.ThreadUtil;
 import com.kaolafm.module.update.utils.UpdateConditionUtil;
 import com.kaolafm.module.update.utils.UpdateConstant;
 import com.kaolafm.module.update.utils.UpdateLog;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -398,10 +401,7 @@ public class UpdateManager {
         @Override
         public void complete() {
             UpdateLog.d("complete download...");
-            // TODO: 2019-11-25 检验文件是否合法
-            // TODO: 2019-11-25 重命名文件
-            DownloadCacheInfoUtil.setDownloadState(UpdateManager.mContext, UpdateConstant.DOWNLOAD_STATE_COMPLETE);
-            notifyDownloadStatus(UpdateConstant.DOWNLOAD_STATE_COMPLETE, 0);
+            verifyDownloadFile();
         }
 
         @Override
@@ -411,5 +411,28 @@ public class UpdateManager {
             notifyDownloadStatus(UpdateConstant.DOWNLOAD_STATE_FAIL, message);
         }
     };
+
+    /**
+     * 校验下载文件
+     */
+    private void verifyDownloadFile() {
+        try {
+            String md5str = FileDigestUtils.md5Hex(new FileInputStream(DownloadCacheInfoUtil.getDownloadPath(mContext)));
+            UpdateLog.d("complete download... md5 : " + md5str);
+            if (md5str.equals(DownloadCacheInfoUtil.getMd5())) {
+                UpdateLog.d("complete download... md5 计算成功");
+                String path = mDownloadManager.renameDownloadFile();
+                DownloadCacheInfoUtil.setDownloadState(mContext, UpdateConstant.DOWNLOAD_STATE_COMPLETE);
+                DownloadCacheInfoUtil.setDownloadPath(mContext, path);
+                notifyDownloadStatus(UpdateConstant.DOWNLOAD_STATE_COMPLETE, 0);
+            } else {
+                UpdateLog.d("complete download... md5 计算失败");
+                mDownloadManager.deleteOldFile(DownloadCacheInfoUtil.getDownloadPath(mContext));
+                DownloadCacheInfoUtil.clearCacheData(mContext);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

@@ -36,6 +36,7 @@ public class PluginInfo {
     private String upgradeNotes;
     private int isUpgrade;
     private int upgradeSituation;
+    private String apkMd5;
 
     public String getApkUrl() {
         return apkUrl;
@@ -91,6 +92,14 @@ public class PluginInfo {
 
     public void setUpgradeSituation(int upgradeSituation) {
         this.upgradeSituation = upgradeSituation;
+    }
+
+    public String getApkMd5() {
+        return apkMd5;
+    }
+
+    public void setApkMd5(String apkMd5) {
+        this.apkMd5 = apkMd5;
     }
 
     /**

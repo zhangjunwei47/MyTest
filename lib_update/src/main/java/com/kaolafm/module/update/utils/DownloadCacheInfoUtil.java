@@ -157,11 +157,25 @@ public class DownloadCacheInfoUtil {
      */
     public static void clearCacheData(Context context) {
         mPluginInfo = null;
+        mDownloadState = UpdateConstant.DOWNLOAD_STATE_INVALID;
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         editor.putInt(DOWNLOAD_STATE, UpdateConstant.DOWNLOAD_STATE_INVALID);
         editor.putString(DOWNLOAD_PATH, UpdateConstant.BLANK_STR);
         editor.putString(INFO, UpdateConstant.BLANK_STR);
         editor.apply();
+    }
+
+    /**
+     * 获取 md5
+     *
+     * @return
+     */
+    public static String getMd5() {
+        if (mPluginInfo == null) {
+            return UpdateConstant.BLANK_STR;
+        }
+
+        return mPluginInfo.getApkMd5();
     }
 
 }

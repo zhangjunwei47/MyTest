@@ -34,7 +34,7 @@ public class DownloadManager {
      */
     private IDownloadListener mIDownloadListener;
 
-    private String mPluginPath = UpdateConstant.FILE_PATH + File.separator + UpdateConstant.PATH_NAME_KRADIO + File.separator + UpdateConstant.PATH_NAME_PLUGIN;
+    public String mPluginPath = UpdateConstant.FILE_PATH + File.separator + UpdateConstant.PATH_NAME_KRADIO + File.separator + UpdateConstant.PATH_NAME_PLUGIN;
 
     public DownloadManager() {
         initDownloadPath();
@@ -252,7 +252,7 @@ public class DownloadManager {
     /**
      * 重命名file
      */
-    public void renameDownloadFile() {
+    public String renameDownloadFile() {
         UpdateLog.d("重命名文件");
         String path = DownloadCacheInfoUtil.getDownloadPath(UpdateManager.mContext);
         String pluginName = mPluginPath + File.separator + UpdateConstant.FILE_NAME;
@@ -261,5 +261,6 @@ public class DownloadManager {
         if (file.exists()) {
             file.renameTo(pluginFile);
         }
+        return pluginName;
     }
 }
