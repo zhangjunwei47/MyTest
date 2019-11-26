@@ -19,7 +19,6 @@ import com.kaolafm.module.update.utils.UpdateLog;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * 升级管理类
@@ -148,7 +147,6 @@ public class UpdateManager {
 
         if (!isHasConditionDownload()) {
             // TODO: 2019-11-21 这里添加错误原因
-            reportUpdateError("111111111111");
             if (iRequestDownloadInfoCallback != null) {
                 iRequestDownloadInfoCallback.noPluginNeedDownload();
             }
@@ -270,49 +268,6 @@ public class UpdateManager {
     public void startDownloadNewVersion() {
         UpdateLog.d("用户同意开始新下载");
         startDownloadNewVersion(mPluginInfo);
-    }
-
-    /**
-     * 上报升级成功
-     */
-    public void reportUpdateSuccess() {
-        UpdateLog.d("上报更新成功");
-        HashMap<String, String> tempHashMap = new HashMap<>();
-        tempHashMap.put(UpdateConstant.KEY_UPDATE_STATUS, UpdateConstant.UPDATE_CODE_SUCCESS);
-        mRequestManager.reportUpdateResultState(tempHashMap, new RequestCallback() {
-            @Override
-            public void result(Object object) {
-
-            }
-
-            @Override
-            public void requestFailure() {
-
-            }
-        });
-    }
-
-    /**
-     * 上报升级失败
-     *
-     * @param errorCode
-     */
-    public void reportUpdateError(String errorCode) {
-        UpdateLog.d("上报更新失败: " + errorCode);
-        HashMap<String, String> tempHashMap = new HashMap<>();
-        tempHashMap.put(UpdateConstant.KEY_UPDATE_STATUS, UpdateConstant.UPDATE_CODE_ERROR);
-        tempHashMap.put(UpdateConstant.KEY_ERROR_EVENT_CODE, errorCode);
-        mRequestManager.reportUpdateResultState(tempHashMap, new RequestCallback() {
-            @Override
-            public void result(Object object) {
-
-            }
-
-            @Override
-            public void requestFailure() {
-
-            }
-        });
     }
 
     /**

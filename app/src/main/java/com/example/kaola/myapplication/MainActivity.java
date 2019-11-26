@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, AudioFocusActivity.class));
         });
         findViewById(R.id.download_btn).setOnClickListener(v -> {
-            UpdateManager.getInstance(MainActivity.this).reportUpdateError("1233");
+
         });
         findViewById(R.id.database_test_btn).setOnClickListener(v -> {
             DataBaseTestUtil.testx();

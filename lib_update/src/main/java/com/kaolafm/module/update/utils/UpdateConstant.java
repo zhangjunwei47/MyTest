@@ -35,6 +35,8 @@ public class UpdateConstant {
      */
     public static final String REPORT_UPDATE_RESULT_URL = BASE_URL + "/v2/kradio/reportUpgrade?";
 
+    public static final String REPORT_BASE_URL = "";
+
     /**
      * 网络请求公共参数key
      */
