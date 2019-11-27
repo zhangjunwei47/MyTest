@@ -41,12 +41,11 @@ public class RequestManager {
     /**
      * 上报升级结果状态
      */
-    public void reportUpdateResultState(HashMap<String, String> parameter, RequestCallback requestCallback) {
+    public void reportUpdateResultState(String url, RequestCallback requestCallback) {
         new OkHttpClient()
                 .newBuilder()
-                .addInterceptor(createPostInterceptor(RequestParamsUtil.getCommonParams(UpdateManager.mContext)))
                 .build()
-                .newCall(createPostRequest(parameter))
+                .newCall(createPostRequest(null))
                 .enqueue(createReportUpdateResultStateCallback(requestCallback));
     }
 
@@ -58,11 +57,10 @@ public class RequestManager {
         return new BasicParamsInterceptor.Builder().addQueryParamsMap(parameterMap).build();
     }
 
-    private Request createPostRequest(HashMap hashMap) {
+    private Request createPostRequest(String url) {
         MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
-        String json = new Gson().toJson(hashMap);
-        RequestBody requestBody = RequestBody.create(mediaType, json);
-        return new Request.Builder().url(UpdateConstant.REPORT_UPDATE_RESULT_URL)
+        RequestBody requestBody = RequestBody.create(mediaType, url);
+        return new Request.Builder().url(UpdateConstant.REPORT_BASE_URL)
                 .post(requestBody)
                 .build();
     }

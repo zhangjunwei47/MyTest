@@ -35,7 +35,10 @@ public class UpdateConstant {
      */
     public static final String REPORT_UPDATE_RESULT_URL = BASE_URL + "/v2/kradio/reportUpgrade?";
 
-    public static final String REPORT_BASE_URL = "";
+    /**
+     * 上报地址
+     */
+    public static final String REPORT_BASE_URL = "http://msg.kaolafm.com/";
 
     /**
      * 网络请求公共参数key
@@ -79,5 +82,12 @@ public class UpdateConstant {
      * 错误类型
      */
     public static final String UPDATE_ERROR_ = "";
+
+
+    // TODO: 2019-11-26  定义正确的类型
+    /**
+     * 升级失败错误类型
+     */
+    public static final String UPDATE_ERROR_REPORT_EVENT_CODE = "101014";
 
 }

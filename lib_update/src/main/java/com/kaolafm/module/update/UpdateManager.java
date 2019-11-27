@@ -11,6 +11,7 @@ import com.kaolafm.module.update.modle.PluginInfo;
 import com.kaolafm.module.update.network.RequestManager;
 import com.kaolafm.module.update.utils.DownloadCacheInfoUtil;
 import com.kaolafm.module.update.utils.FileDigestUtils;
+import com.kaolafm.module.update.utils.ReportUtil;
 import com.kaolafm.module.update.utils.ThreadUtil;
 import com.kaolafm.module.update.utils.UpdateConditionUtil;
 import com.kaolafm.module.update.utils.UpdateConstant;
@@ -390,4 +391,11 @@ public class UpdateManager {
         }
     }
 
+    /**
+     * 上报升级失败
+     */
+    public void reportUpdateError() {
+        String eventUrl = ReportUtil.getEvent();
+        mRequestManager.reportUpdateResultState();
+    }
 }
