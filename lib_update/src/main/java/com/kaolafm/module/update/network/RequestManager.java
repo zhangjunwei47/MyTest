@@ -50,9 +50,6 @@ public class RequestManager {
                 .enqueue(createReportUpdateResultStateCallback());
     }
 
-    private BasicParamsInterceptor createPostInterceptor(HashMap parameterMap) {
-        return new BasicParamsInterceptor.Builder().addQueryParamsMap(parameterMap).build();
-    }
 
     private BasicParamsInterceptor createGetInterceptor(HashMap parameterMap) {
         return new BasicParamsInterceptor.Builder().addQueryParamsMap(parameterMap).build();
