@@ -396,6 +396,6 @@ public class UpdateManager {
      */
     public void reportUpdateError() {
         String eventUrl = ReportUtil.getEvent();
-        mRequestManager.reportUpdateResultState();
+        mRequestManager.reportUpdateResultState(eventUrl);
     }
 }

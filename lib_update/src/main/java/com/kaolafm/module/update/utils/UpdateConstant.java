@@ -38,7 +38,7 @@ public class UpdateConstant {
     /**
      * 上报地址
      */
-    public static final String REPORT_BASE_URL = "http://msg.kaolafm.com/";
+    public static final String REPORT_BASE_URL = "http://msg.kaolafm.com/k";
 
     /**
      * 网络请求公共参数key
@@ -88,6 +88,6 @@ public class UpdateConstant {
     /**
      * 升级失败错误类型
      */
-    public static final String UPDATE_ERROR_REPORT_EVENT_CODE = "101014";
+    public static final String UPDATE_ERROR_REPORT_EVENT_CODE = "333333";
 
 }

@@ -6,6 +6,7 @@ import com.kaolafm.module.update.listener.RequestCallback;
 import com.kaolafm.module.update.modle.PluginInfoBaseResult;
 import com.kaolafm.module.update.utils.RequestParamsUtil;
 import com.kaolafm.module.update.utils.UpdateConstant;
+import com.kaolafm.module.update.utils.UpdateLog;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -41,12 +42,12 @@ public class RequestManager {
     /**
      * 上报升级结果状态
      */
-    public void reportUpdateResultState(String url, RequestCallback requestCallback) {
+    public void reportUpdateResultState(String json) {
         new OkHttpClient()
                 .newBuilder()
                 .build()
-                .newCall(createPostRequest(null))
-                .enqueue(createReportUpdateResultStateCallback(requestCallback));
+                .newCall(createPostRequest(json))
+                .enqueue(createReportUpdateResultStateCallback());
     }
 
     private BasicParamsInterceptor createPostInterceptor(HashMap parameterMap) {
@@ -57,9 +58,9 @@ public class RequestManager {
         return new BasicParamsInterceptor.Builder().addQueryParamsMap(parameterMap).build();
     }
 
-    private Request createPostRequest(String url) {
+    private Request createPostRequest(String json) {
         MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
-        RequestBody requestBody = RequestBody.create(mediaType, url);
+        RequestBody requestBody = RequestBody.create(mediaType, json);
         return new Request.Builder().url(UpdateConstant.REPORT_BASE_URL)
                 .post(requestBody)
                 .build();
@@ -97,20 +98,16 @@ public class RequestManager {
         };
     }
 
-    private Callback createReportUpdateResultStateCallback(RequestCallback requestCallback) {
+    private Callback createReportUpdateResultStateCallback() {
         return new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                if (requestCallback != null) {
-                    requestCallback.requestFailure();
-                }
+                UpdateLog.d("上报失败");
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if (requestCallback != null) {
-                    requestCallback.result(response);
-                }
+                UpdateLog.d("上报成功");
             }
         };
     }

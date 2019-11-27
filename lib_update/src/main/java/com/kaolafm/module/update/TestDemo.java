@@ -13,6 +13,7 @@ public class TestDemo {
         if (isHasDown) {
             String path = UpdateManager.getInstance(context).getDownloadedPluginPath();
             UpdateLog.d("加载路径 = " + path);
+            UpdateManager.getInstance(context).reportUpdateError();
             UpdateManager.getInstance(context).loadPluginSuccess();
             //加载插件
         } else {

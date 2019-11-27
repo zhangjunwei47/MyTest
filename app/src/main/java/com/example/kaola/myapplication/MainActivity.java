@@ -16,7 +16,6 @@ import com.example.kaola.myapplication.servicelife.ServiceLifeActivity;
 import com.example.kaola.myapplication.util.DataBaseTestUtil;
 import com.example.kaola.myapplication.util.UuidUtil;
 import com.kaolafm.module.update.TestDemo;
-import com.kaolafm.module.update.UpdateManager;
 import com.zc.test.R;
 
 
