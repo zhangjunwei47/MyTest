@@ -9,7 +9,7 @@ public class ReportUtil {
     /**
      * 添加上报事件
      */
-    public static String getEvent() {
+    public static String getEvent(int errorCode) {
         ReportEvent reportEvent = new ReportEvent();
         reportEvent.setEventcode(UpdateConstant.UPDATE_ERROR_REPORT_EVENT_CODE);
         reportEvent.setAppid(RequestCacheInfoUtil.getAppId(UpdateManager.mContext));

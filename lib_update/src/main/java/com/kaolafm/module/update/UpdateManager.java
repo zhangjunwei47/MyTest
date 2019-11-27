@@ -147,7 +147,8 @@ public class UpdateManager {
         }
 
         if (!isHasConditionDownload()) {
-            // TODO: 2019-11-21 这里添加错误原因
+            // TODO: 2019-11-27 具体原因
+            reportUpdateError(1);
             if (iRequestDownloadInfoCallback != null) {
                 iRequestDownloadInfoCallback.noPluginNeedDownload();
             }
@@ -191,6 +192,7 @@ public class UpdateManager {
      */
     private void noCacheDownload(PluginInfo pluginInfo, IRequestDownloadInfoCallback iRequestDownloadInfoCallback) {
         UpdateLog.d("没有缓存信息,开始新的下载");
+        clearCache();
         uiCallback(pluginInfo, iRequestDownloadInfoCallback);
         if (isDownloadNeedUserAgree(pluginInfo)) {
             mPluginInfo = pluginInfo;
@@ -209,13 +211,7 @@ public class UpdateManager {
         PluginInfo pluginInfoOld = DownloadCacheInfoUtil.getPluginInfo(mContext);
         if (pluginInfoOld == null || TextUtils.isEmpty(pluginInfoOld.getVersionNum())) {
             UpdateLog.d("原来缓存的数据有问题, 重新下载");
-            uiCallback(pluginInfo, iRequestDownloadInfoCallback);
-            if (isDownloadNeedUserAgree(pluginInfo)) {
-                mPluginInfo = pluginInfo;
-                UpdateLog.d("需要用户同意后, 下载");
-                return;
-            }
-            startDownloadNewVersion(pluginInfo);
+            cacheIsDifferentNetwork(pluginInfo, iRequestDownloadInfoCallback);
             return;
         }
 
@@ -227,14 +223,22 @@ public class UpdateManager {
             mDownloadManager.startDownload(false);
         } else {
             UpdateLog.d("升级信息版本不相同, 清空数据, 开始新的下载");
-            uiCallback(pluginInfo, iRequestDownloadInfoCallback);
-            if (isDownloadNeedUserAgree(pluginInfo)) {
-                UpdateLog.d("需要用户同意后, 下载");
-                mPluginInfo = pluginInfo;
-                return;
-            }
-            startDownloadNewVersion(pluginInfo);
+            cacheIsDifferentNetwork(pluginInfo, iRequestDownloadInfoCallback);
         }
+    }
+
+    /**
+     * 本地缓存与服务器不同
+     */
+    private void cacheIsDifferentNetwork(PluginInfo pluginInfo, IRequestDownloadInfoCallback iRequestDownloadInfoCallback) {
+        clearCache();
+        uiCallback(pluginInfo, iRequestDownloadInfoCallback);
+        if (isDownloadNeedUserAgree(pluginInfo)) {
+            UpdateLog.d("需要用户同意后, 下载");
+            mPluginInfo = pluginInfo;
+            return;
+        }
+        startDownloadNewVersion(pluginInfo);
     }
 
     /**
@@ -257,10 +261,16 @@ public class UpdateManager {
      */
     private void startDownloadNewVersion(PluginInfo pluginInfo) {
         UpdateLog.d("开始新下载");
-        mDownloadManager.deleteOldFile(DownloadCacheInfoUtil.getDownloadPath(mContext));
-        DownloadCacheInfoUtil.clearCacheData(mContext);
         DownloadCacheInfoUtil.setPluginInfo(mContext, pluginInfo);
         mDownloadManager.startDownload(true);
+    }
+
+    /**
+     * 清除本地所有缓存
+     */
+    private void clearCache() {
+        mDownloadManager.deleteOldFile(DownloadCacheInfoUtil.getDownloadPath(mContext));
+        DownloadCacheInfoUtil.clearCacheData(mContext);
     }
 
     /**
@@ -394,8 +404,8 @@ public class UpdateManager {
     /**
      * 上报升级失败
      */
-    public void reportUpdateError() {
-        String eventUrl = ReportUtil.getEvent();
+    public void reportUpdateError(int errorCode) {
+        String eventUrl = ReportUtil.getEvent(errorCode);
         mRequestManager.reportUpdateResultState(eventUrl);
     }
 }

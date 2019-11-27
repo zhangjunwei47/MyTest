@@ -13,7 +13,6 @@ public class TestDemo {
         if (isHasDown) {
             String path = UpdateManager.getInstance(context).getDownloadedPluginPath();
             UpdateLog.d("加载路径 = " + path);
-            UpdateManager.getInstance(context).reportUpdateError();
             UpdateManager.getInstance(context).loadPluginSuccess();
             //加载插件
         } else {
@@ -23,21 +22,28 @@ public class TestDemo {
                     public void pluginNeedDownload(boolean isMandatory, boolean isNeedShowToast, String toastMessage) {
                         if (isMandatory) {
                             //强制升级, 显示进度条
+                            UpdateLog.d("强制下载插件...");
+
                             return;
                         }
                         //进入首页
                         if (isNeedShowToast) {
+                            UpdateLog.d("需要弹出提示框下载...");
                             Toast.makeText(context, toastMessage, Toast.LENGTH_LONG).show();
+                        } else {
+                            UpdateLog.d("不需要弹出提示框下载...");
                         }
                     }
 
                     @Override
                     public void noPluginNeedDownload() {
                         //进入首页
+                        UpdateLog.d("没有需要下载的插件...");
                     }
                 });
             } else {
                 //进入首页
+                UpdateLog.d("没有条件下载插件...");
             }
         }
 
