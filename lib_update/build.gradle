@@ -55,4 +55,6 @@ dependencies {
     api dependent["gson"]
 
     api dependent["constraint"]
+
+    implementation rootProject.ext.dependencies["appcompat-v7"]
 }

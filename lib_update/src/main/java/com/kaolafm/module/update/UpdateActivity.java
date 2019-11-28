@@ -1,12 +1,22 @@
 package com.kaolafm.module.update;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.kaolafm.module.update.listener.IRequestDownloadInfoCallback;
 import com.kaolafm.module.update.utils.UpdateLog;
 
-public class TestDemo {
+public class UpdateActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.update_activity);
+        start(getApplicationContext());
+    }
 
     public void start(Context context) {
         boolean isHasDown = UpdateManager.getInstance(context).isHasDownloadedPlugin();

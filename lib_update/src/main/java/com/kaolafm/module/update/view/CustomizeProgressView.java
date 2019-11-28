@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.kaolafm.module.update.R;
@@ -13,7 +14,9 @@ import com.kaolafm.module.update.R;
  */
 public class CustomizeProgressView extends ConstraintLayout {
 
-    ImageView progressView;
+    private int mOldProgress;
+    private ImageView mProgressView;
+    private ConstraintSet mConstraintSet;
 
     public CustomizeProgressView(Context context) {
         super(context);
@@ -31,10 +34,12 @@ public class CustomizeProgressView extends ConstraintLayout {
     }
 
     private void initView() {
+        mConstraintSet = new ConstraintSet();
         inflate(getContext(), R.layout.view_customize_progress, this);
-        progressView = findViewById(R.id.downloadProgressing);
-        setBackgroundColor(getResources().getColor(R.color.update_layout_bg_color, null));
+        mProgressView = findViewById(R.id.downloadProgressing);
+        setBackgroundColor(getResources().getColor(R.color.progress_bg_color, null));
     }
+
 
     /**
      * 设置进度
@@ -42,11 +47,21 @@ public class CustomizeProgressView extends ConstraintLayout {
      * @param progress
      */
     public void setProgress(float progress) {
-        ConstraintSet constraintSet = new ConstraintSet();
-        constraintSet.clone(this);
-        constraintSet.constrainPercentWidth(progressView.getId(), progress);
-        constraintSet.applyTo(this);
+        int currentProgress = (int) (progress * 1000);
+        if (mOldProgress == currentProgress) {
+            return;
+        }
+        setViewVisibility(mProgressView, View.VISIBLE);
+        mOldProgress = currentProgress;
+        mConstraintSet.clone(this);
+        mConstraintSet.constrainPercentWidth(mProgressView.getId(), progress);
+        mConstraintSet.applyTo(this);
     }
 
-
+    private void setViewVisibility(View view, int visibility) {
+        if (view.getVisibility() == visibility) {
+            return;
+        }
+        view.setVisibility(visibility);
+    }
 }
