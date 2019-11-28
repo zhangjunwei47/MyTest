@@ -54,8 +54,10 @@ public class DownloadResponseBody extends ResponseBody {
             public long read(Buffer sink, long byteCount) throws IOException {
                 long bytesRead = super.read(sink, byteCount);
                 alreadyBytesRead += bytesRead == -1 ? 0 : bytesRead;
+                long total = (contentLength() + oldPoint) / 1024;
+                long progress = (alreadyBytesRead + oldPoint) / 1024;
                 if (mDownloadListener != null) {
-                    mDownloadListener.loading((int) ((alreadyBytesRead + oldPoint) / (1024)));
+                    mDownloadListener.loading((int) progress, (int) total);
                 }
                 return bytesRead;
             }

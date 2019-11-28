@@ -12,7 +12,7 @@ public interface IDownloadListener {
     /**
      * 正在下载进度
      */
-    void loading(int progress);
+    void loading(int progress, int totalSize);
 
     /**
      * 下载完成

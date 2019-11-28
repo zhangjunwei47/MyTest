@@ -53,4 +53,6 @@ dependencies {
     api dependent["rxjava"]
 
     api dependent["gson"]
+
+    api dependent["constraint"]
 }

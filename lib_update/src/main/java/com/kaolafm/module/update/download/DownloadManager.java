@@ -195,12 +195,6 @@ public class DownloadManager {
         }
     }
 
-    private void notifyDownloading(int progress) {
-        if (mIDownloadListener != null) {
-            mIDownloadListener.loading(progress);
-        }
-    }
-
     private void notifyDownloadComplete() {
         if (mIDownloadListener != null) {
             mIDownloadListener.complete();

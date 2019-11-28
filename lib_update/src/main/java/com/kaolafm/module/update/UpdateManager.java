@@ -310,7 +310,7 @@ public class UpdateManager {
         }
     }
 
-    private void notifyDownloadStatus(int state, Object param1) {
+    private void notifyDownloadStatus(int state, Object param1, Object param2) {
         ArrayList<IDownloadListener> tempDownloadList = (ArrayList<IDownloadListener>) mDownloadArrayList.clone();
         int size = tempDownloadList.size();
         for (int i = 0; i < size; i++) {
@@ -318,11 +318,11 @@ public class UpdateManager {
             if (downloadListener == null) {
                 continue;
             }
-            notifyStatusChange(downloadListener, state, param1);
+            notifyStatusChange(downloadListener, state, param1, param2);
         }
     }
 
-    private void notifyStatusChange(IDownloadListener iDownloadListener, int state, Object param1) {
+    private void notifyStatusChange(IDownloadListener iDownloadListener, int state, Object param1, Object param2) {
         switch (state) {
             case UpdateConstant.DOWNLOAD_STATE_INVALID: {
 
@@ -333,7 +333,7 @@ public class UpdateManager {
             }
             break;
             case UpdateConstant.DOWNLOAD_STATE_DOWNLOADING: {
-                ThreadUtil.runUIThread(() -> iDownloadListener.loading((int) param1));
+                ThreadUtil.runUIThread(() -> iDownloadListener.loading((int) param1, (int)param2) );
             }
             break;
             case UpdateConstant.DOWNLOAD_STATE_COMPLETE: {
@@ -354,14 +354,14 @@ public class UpdateManager {
         public void start() {
             UpdateLog.d("start download...: ");
             DownloadCacheInfoUtil.setDownloadState(UpdateManager.mContext, UpdateConstant.DOWNLOAD_STATE_BEGIN);
-            notifyDownloadStatus(UpdateConstant.DOWNLOAD_STATE_BEGIN, 0);
+            notifyDownloadStatus(UpdateConstant.DOWNLOAD_STATE_BEGIN, 0, 0);
         }
 
         @Override
-        public void loading(int progress) {
+        public void loading(int progress, int total) {
             UpdateLog.i("loading download..." + progress);
             DownloadCacheInfoUtil.setDownloadState(UpdateManager.mContext, UpdateConstant.DOWNLOAD_STATE_DOWNLOADING);
-            notifyDownloadStatus(UpdateConstant.DOWNLOAD_STATE_DOWNLOADING, progress);
+            notifyDownloadStatus(UpdateConstant.DOWNLOAD_STATE_DOWNLOADING, progress, total);
         }
 
         @Override
@@ -374,7 +374,7 @@ public class UpdateManager {
         public void fail(int code, String message) {
             UpdateLog.d("fail download...");
             DownloadCacheInfoUtil.setDownloadState(UpdateManager.mContext, UpdateConstant.DOWNLOAD_STATE_FAIL);
-            notifyDownloadStatus(UpdateConstant.DOWNLOAD_STATE_FAIL, message);
+            notifyDownloadStatus(UpdateConstant.DOWNLOAD_STATE_FAIL, message, 0);
         }
     };
 
@@ -390,7 +390,7 @@ public class UpdateManager {
                 String path = mDownloadManager.renameDownloadFile();
                 DownloadCacheInfoUtil.setDownloadState(mContext, UpdateConstant.DOWNLOAD_STATE_COMPLETE);
                 DownloadCacheInfoUtil.setDownloadPath(mContext, path);
-                notifyDownloadStatus(UpdateConstant.DOWNLOAD_STATE_COMPLETE, 0);
+                notifyDownloadStatus(UpdateConstant.DOWNLOAD_STATE_COMPLETE, 0, 0);
             } else {
                 UpdateLog.d("complete download... md5 计算失败");
                 mDownloadManager.deleteOldFile(DownloadCacheInfoUtil.getDownloadPath(mContext));
