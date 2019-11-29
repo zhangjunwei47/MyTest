@@ -84,10 +84,9 @@ public class UpdateConstant {
     public static final String UPDATE_ERROR_ = "";
 
 
-    // TODO: 2019-11-26  定义正确的类型
     /**
      * 升级失败错误类型
      */
-    public static final String UPDATE_ERROR_REPORT_EVENT_CODE = "333333";
+    public static final String UPDATE_ERROR_REPORT_EVENT_CODE = "100007";
 
 }

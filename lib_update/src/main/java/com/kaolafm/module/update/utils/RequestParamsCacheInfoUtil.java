@@ -7,7 +7,7 @@ import android.text.TextUtils;
 /**
  * 请求服务器需要的信息缓存工具
  */
-public class RequestCacheInfoUtil {
+public class RequestParamsCacheInfoUtil {
 
     private static final String PREFERENCE_NAME = "RequestParameterInfo.sp";
     private static final String UDID = "udId";

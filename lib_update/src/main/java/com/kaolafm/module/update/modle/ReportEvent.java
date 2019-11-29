@@ -57,7 +57,7 @@ public class ReportEvent {
     /**
      * 合作方式 0：APK，1：SDK，2：API，3：控件
      */
-    private String appid_type;
+    private String appid_type = "1";
 
     /**
      * 产品直接落地车辆所属的车厂，后装则为方案商名称

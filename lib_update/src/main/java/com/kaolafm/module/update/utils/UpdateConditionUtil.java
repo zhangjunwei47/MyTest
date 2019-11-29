@@ -48,7 +48,7 @@ public class UpdateConditionUtil {
      * @return
      */
     public static boolean isHasRequestInfoAvailable(Context context) {
-        return !RequestCacheInfoUtil.isNoHasConditionInfo(context);
+        return !RequestParamsCacheInfoUtil.isNoHasConditionInfo(context);
     }
 
 }

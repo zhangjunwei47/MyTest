@@ -19,12 +19,12 @@ public final class RequestParamsUtil {
     public static HashMap<String, String> getCommonParams(Context context) {
         HashMap<String, String> data = new HashMap<>();
 
-        String appId = RequestCacheInfoUtil.getAppId(context);
+        String appId = RequestParamsCacheInfoUtil.getAppId(context);
         // TODO: 2019-11-22 测试环境需要屏蔽代码
         //String pkgName = context.getPackageName();
         String pkgName = "com.edog.car.ceshizhuanyong_kradio";
-        String openId = RequestCacheInfoUtil.getOpenid(context);
-        String deviceId = RequestCacheInfoUtil.getUdid(context);
+        String openId = RequestParamsCacheInfoUtil.getOpenid(context);
+        String deviceId = RequestParamsCacheInfoUtil.getUdid(context);
 
         data.put(UpdateConstant.KEY_APP_ID, appId);
         data.put(UpdateConstant.KEY_PACKAGE, pkgName);
@@ -37,8 +37,8 @@ public final class RequestParamsUtil {
         String contentSub = data.toString().replace("{", UpdateConstant.BLANK_STR).replace("}", UpdateConstant.BLANK_STR).replace(" ", UpdateConstant.BLANK_STR);
         String[] totalValues = contentSub.split(",");
 
-        data.put(UpdateConstant.KEY_SIGN, MD5Util.getMD5Str(madeUrlSign(totalValues, RequestCacheInfoUtil.getAppKey(context))));
-        data.put(UpdateConstant.KEY_VERSION, RequestCacheInfoUtil.getAppVersion(context));
+        data.put(UpdateConstant.KEY_SIGN, MD5Util.getMD5Str(madeUrlSign(totalValues, RequestParamsCacheInfoUtil.getAppKey(context))));
+        data.put(UpdateConstant.KEY_VERSION, RequestParamsCacheInfoUtil.getAppVersion(context));
         return data;
     }
 
