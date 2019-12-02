@@ -333,7 +333,7 @@ public class UpdateManager {
             }
             break;
             case UpdateConstant.DOWNLOAD_STATE_DOWNLOADING: {
-                ThreadUtil.runUIThread(() -> iDownloadListener.loading((int) param1, (int)param2) );
+                ThreadUtil.runUIThread(() -> iDownloadListener.loading((int) param1, (int) param2));
             }
             break;
             case UpdateConstant.DOWNLOAD_STATE_COMPLETE: {
@@ -407,5 +407,13 @@ public class UpdateManager {
     public void reportUpdateError(int errorCode) {
         String eventUrl = ReportUtil.getEvent(errorCode);
         mRequestManager.reportUpdateResultState(eventUrl);
+    }
+
+    /**
+     * 获取要升级的信息
+     * @return
+     */
+    public PluginInfo getCurrentPluginInfo() {
+        return mPluginInfo;
     }
 }

@@ -4,10 +4,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import com.kaolafm.module.update.listener.IRequestDownloadInfoCallback;
 import com.kaolafm.module.update.utils.UpdateLog;
+import com.kaolafm.module.update.view.RecommendUpdateView;
 
 public class UpdateActivity extends AppCompatActivity {
 
@@ -15,7 +15,8 @@ public class UpdateActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_activity);
-        start(getApplicationContext());
+        //   start(getApplicationContext());
+        findViewById(R.id.updateBtn).setOnClickListener();
     }
 
     public void start(Context context) {
@@ -38,8 +39,8 @@ public class UpdateActivity extends AppCompatActivity {
                         }
                         //进入首页
                         if (isNeedShowToast) {
+                            showDialog();
                             UpdateLog.d("需要弹出提示框下载...");
-                            Toast.makeText(context, toastMessage, Toast.LENGTH_LONG).show();
                         } else {
                             UpdateLog.d("不需要弹出提示框下载...");
                         }
@@ -57,5 +58,13 @@ public class UpdateActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    private void showDialog() {
+        RecommendUpdateView recommendUpdateView = RecommendUpdateView.getInstance(UpdateManager.getInstance(UpdateActivity.this).getCurrentPluginInfo());
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment, recommendUpdateView)
+                .commit();
     }
 }
