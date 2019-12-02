@@ -10,5 +10,9 @@
     <color name="update_dialog_title_text_color">#FFFFFF</color>
     <color name="update_dialog_content_text_color">#AFB4D1</color>
     <color name="update_dialog_update_button_bg_color">#4E5BB1</color>
+    <color name="update_dialog_update_button_bg_select_color">#804E5BB1</color>
+
     <color name="update_dialog_cancel_button_bg_color">#AFB4D1</color>
+    <color name="update_dialog_cancel_button_bg_select_color">#80AFB4D1</color>
+
 </resources>
