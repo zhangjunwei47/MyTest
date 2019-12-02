@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/update_dialog_title_text_color"
+        android:textSize="@dimen/update_dialog_title_text_size" />
+
+    <TextView
+        android:id="@+id/contentVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/update_dialog_content_text_color"
+        android:textSize="@dimen/update_dialog_content_text_size" />
+
+    <TextView
+        android:id="@+id/contentSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/update_dialog_content_text_color"
+        android:textSize="@dimen/update_dialog_content_text_size" />
+
+    <TextView
+        android:id="@+id/contentUpdateInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/update_dialog_content_text_color"
+        android:textSize="@dimen/update_dialog_content_text_size" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </android.support.constraint.ConstraintLayout>

@@ -37,7 +37,7 @@ public class CustomizeProgressView extends ConstraintLayout {
         mConstraintSet = new ConstraintSet();
         inflate(getContext(), R.layout.view_customize_progress, this);
         mProgressView = findViewById(R.id.downloadProgressing);
-        setBackgroundColor(getResources().getColor(R.color.progress_bg_color, null));
+        setBackgroundColor(getResources().getColor(R.color.update_progress_bg_color, null));
     }
 
 

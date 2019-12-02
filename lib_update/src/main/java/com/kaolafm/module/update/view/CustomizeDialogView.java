@@ -12,6 +12,7 @@ import com.kaolafm.module.update.R;
 public class CustomizeDialogView extends DialogFragment {
 
     private View mRootView;
+    protected View mContentView;
 
     public static CustomizeDialogView getInstance() {
         CustomizeDialogView customizeDialogView = new CustomizeDialogView();
@@ -25,6 +26,11 @@ public class CustomizeDialogView extends DialogFragment {
             mRootView = inflater.inflate(R.layout.customize_dialog, container, false);
         }
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    public void setContentView()
+    {
+
     }
 
 
