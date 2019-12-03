@@ -45,26 +45,30 @@
         android:textSize="@dimen/update_dialog_content_text_size"
         app:layout_constraintTop_toBottomOf="@id/contentSize" />
 
-    <ScrollView
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/update_dialog_content_distance"
         android:paddingRight="@dimen/update_dialog_content_distance"
         app:layout_constraintTop_toBottomOf="@id/contentInfo">
 
-        <TextView
-            android:id="@+id/contentUpdateInfo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="@color/update_dialog_content_text_color"
-            android:textSize="@dimen/update_dialog_content_text_size" />
-    </ScrollView>
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/contentUpdateInfo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/update_dialog_content_text_color"
+                android:textSize="@dimen/update_dialog_content_text_size" />
+        </ScrollView>
+    </android.support.constraint.ConstraintLayout>
 
     <Button
         android:id="@+id/updateBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/update_btn_selector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -74,7 +78,6 @@
         android:id="@+id/cancelBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/update_cancel_btn_selector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintLeft_toLeftOf="parent"

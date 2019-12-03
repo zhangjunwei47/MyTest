@@ -35,22 +35,28 @@ public class RecommendUpdateView extends DialogFragment {
         return recommendUpdateView;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(android.support.v4.app.DialogFragment.STYLE_NO_TITLE, R.style.BaseDialogTheme);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        return getContentView(inflater, container);
+    }
+
+    //@Override
+    protected View getContentView(LayoutInflater inflater, ViewGroup container) {
         if (mRootView == null) {
-            mRootView = inflater.inflate(R.layout.customize_dialog, container, false);
+            mRootView = inflater.inflate(R.layout.customize_dialog, container);
         }
+        initView(mRootView);
+        initDataView();
         return mRootView;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        initView(view);
-        initDataView();
-    }
 
     private void initView(View view) {
         titleTextView = view.findViewById(R.id.titleTextView);
@@ -86,7 +92,7 @@ public class RecommendUpdateView extends DialogFragment {
     private String getSizeString() {
         // TODO: 2019-12-02  确定大小
         String sizeStr = getString(R.string.update_text_size_str);
-        sizeStr += " "+ "303003" + "M";
+        sizeStr += " " + "303003" + "M";
         return sizeStr;
     }
 
