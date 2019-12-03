@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="@color/update_customize_dialog_bg_color">
 
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:text="@string/update_dialog_title_str"
         android:textColor="@color/update_dialog_title_text_color"
         android:textSize="@dimen/update_dialog_title_text_size"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/contentVersion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:paddingLeft="@dimen/update_dialog_content_distance"
         android:paddingRight="@dimen/update_dialog_content_distance"
+        android:text="@string/update_text_version_str"
         android:textColor="@color/update_dialog_content_text_color"
         android:textSize="@dimen/update_dialog_content_text_size"
         app:layout_constraintTop_toBottomOf="@id/titleTextView" />
@@ -29,8 +33,10 @@
         android:id="@+id/contentSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:paddingLeft="@dimen/update_dialog_content_distance"
         android:paddingRight="@dimen/update_dialog_content_distance"
+        android:text="@string/update_text_size_str"
         android:textColor="@color/update_dialog_content_text_color"
         android:textSize="@dimen/update_dialog_content_text_size"
         app:layout_constraintTop_toBottomOf="@id/contentVersion" />
@@ -39,15 +45,19 @@
         android:id="@+id/contentInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:paddingLeft="@dimen/update_dialog_content_distance"
         android:paddingRight="@dimen/update_dialog_content_distance"
+        android:text="@string/update_text_content_str"
         android:textColor="@color/update_dialog_content_text_color"
         android:textSize="@dimen/update_dialog_content_text_size"
         app:layout_constraintTop_toBottomOf="@id/contentSize" />
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/infoLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
         android:paddingLeft="@dimen/update_dialog_content_distance"
         android:paddingRight="@dimen/update_dialog_content_distance"
         app:layout_constraintTop_toBottomOf="@id/contentInfo">
@@ -60,6 +70,7 @@
                 android:id="@+id/contentUpdateInfo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:text="哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈"
                 android:textColor="@color/update_dialog_content_text_color"
                 android:textSize="@dimen/update_dialog_content_text_size" />
         </ScrollView>
@@ -69,6 +80,8 @@
         android:id="@+id/updateBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="@string/update_now_str"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -78,8 +91,10 @@
         android:id="@+id/cancelBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/update_later_str"
+        app:layout_constraintBottom_toBottomOf="@id/updateBtn"
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/updateBtn" />
 </android.support.constraint.ConstraintLayout>

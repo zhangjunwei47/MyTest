@@ -51,7 +51,6 @@ public class RecommendUpdateView extends DialogFragment {
         return getContentView(inflater, container);
     }
 
-    //@Override
     protected View getContentView(LayoutInflater inflater, ViewGroup container) {
         if (mRootView == null) {
             mRootView = inflater.inflate(R.layout.customize_dialog, container);
@@ -107,18 +106,40 @@ public class RecommendUpdateView extends DialogFragment {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        setupWindowSize();
+        int mCurrentOrientation = newConfig.orientation;
+        if (mCurrentOrientation == Configuration.ORIENTATION_PORTRAIT) {
+            portraitScreen();
+        } else {
+            horizontalScreen();
+        }
     }
 
-    private void setupWindowSize() {
+    private void setupWindowSize(int height, int width) {
         Window window = getDialog().getWindow();
         if (window != null) {
             WindowManager.LayoutParams lp = window.getAttributes();
-            lp.height = (int) (ScreenUtil.getScreenHeight(getContext()) * 0.75);
-            lp.width = (int) (ScreenUtil.getScreenWidth(getContext()) * 0.75);
+            lp.height = height;
+            lp.width = width;
             window.setAttributes(lp);
         }
     }
 
+    /**
+     * 横屏
+     */
+    private void horizontalScreen() {
+        int height = (int)(ScreenUtil.getScreenHeight(getContext())* 0.8);
+        int width =  (int)(ScreenUtil.getScreenWidth(getContext())*0.75);
+        setupWindowSize(height, width);
+    }
+
+    /**
+     * 竖屏
+     */
+    private void portraitScreen() {
+        int height = (int)(ScreenUtil.getScreenHeight(getContext())* 0.6);
+        int width =  (int)(ScreenUtil.getScreenWidth(getContext())*0.8);
+        setupWindowSize(height, width);
+    }
 
 }
