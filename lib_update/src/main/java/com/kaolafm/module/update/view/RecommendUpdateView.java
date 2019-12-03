@@ -1,16 +1,20 @@
 package com.kaolafm.module.update.view;
 
 import android.app.DialogFragment;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.kaolafm.module.update.R;
 import com.kaolafm.module.update.modle.PluginInfo;
+import com.kaolafm.module.update.utils.ScreenUtil;
 
 public class RecommendUpdateView extends DialogFragment {
     protected PluginInfo pluginInfo;
@@ -90,14 +94,31 @@ public class RecommendUpdateView extends DialogFragment {
     }
 
     private String getSizeString() {
-        // TODO: 2019-12-02  确定大小
         String sizeStr = getString(R.string.update_text_size_str);
-        sizeStr += " " + "303003" + "M";
+        float size = pluginInfo.getFileSize() / (1024 * 1024);
+        sizeStr += " " + size + "M";
         return sizeStr;
     }
 
     private String getUpdateInfoString() {
-        return "这是一个流口水的房间辣可视对讲放辣椒水电费拉卡机是东风路;氨基酸对伐啦手机端风口浪尖萨迪克了附近阿里斯顿就发了啥;快递费就";
+        return pluginInfo.getUpgradeNotes();
     }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        setupWindowSize();
+    }
+
+    private void setupWindowSize() {
+        Window window = getDialog().getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams lp = window.getAttributes();
+            lp.height = (int) (ScreenUtil.getScreenHeight(getContext()) * 0.75);
+            lp.width = (int) (ScreenUtil.getScreenWidth(getContext()) * 0.75);
+            window.setAttributes(lp);
+        }
+    }
+
 
 }

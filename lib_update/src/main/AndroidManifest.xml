@@ -29,6 +29,10 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application>
-        <activity android:name=".UpdateActivity" />
+        <activity
+            android:name=".UpdateActivity"
+            android:configChanges="orientation|screenSize|locale|layoutDirection|keyboard|screenLayout|uiMode"
+            android:launchMode="singleTask"
+            android:screenOrientation="unspecified" />
     </application>
 </manifest>
