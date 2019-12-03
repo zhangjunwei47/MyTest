@@ -3,15 +3,24 @@ package com.kaolafm.module.update;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.PluralsRes;
 import android.support.v4.app.FragmentActivity;
 
 import com.kaolafm.module.update.listener.IRequestDownloadInfoCallback;
 import com.kaolafm.module.update.modle.PluginInfo;
 import com.kaolafm.module.update.utils.UpdateLog;
+import com.kaolafm.module.update.view.MandatoryUpdateView;
 import com.kaolafm.module.update.view.RecommendUpdateView;
+
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 
 public class UpdateActivity extends FragmentActivity {
     public static Context mContext;
+    private MandatoryUpdateView progressView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +30,8 @@ public class UpdateActivity extends FragmentActivity {
         findViewById(R.id.updateBtn).setOnClickListener(v -> {
             showDialog();
         });
+        progressView = findViewById(R.id.progressView);
+        testBegin();
     }
 
     public void start(Context context) {
@@ -62,6 +73,22 @@ public class UpdateActivity extends FragmentActivity {
             }
         }
 
+    }
+
+    float progress = 0.0f;
+    private void testBegin()
+    {
+
+        Observable.interval(100, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        progress = progress+ 0.01f;
+
+                            progressView.update(progress);
+
+                    }
+                });
     }
 
     private void showDialog() {

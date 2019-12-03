@@ -1,16 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:id="@+id/mainLayout"
+    android:layout_height="100dp">
+
+    <ImageView
+        android:id="@+id/downloadProgressingBg"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:background="@color/update_progress_bg_color"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintWidth_percent="0.7"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageView
         android:id="@+id/downloadProgressing"
         android:layout_width="0dp"
-        android:layout_height="@dimen/mandatory_update_progress_height"
+        android:layout_height="5dp"
         android:background="@drawable/shape_gradient"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-</merge>
+        app:layout_constraintRight_toRightOf="@id/downloadProgressingBg" />
+
+    <ImageView
+        android:id="@+id/downloadCar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/translucent"
+        android:src="@mipmap/ic_car_progress"
+        app:layout_constraintBottom_toBottomOf="@id/downloadProgressing"
+        app:layout_constraintLeft_toRightOf="@id/downloadProgressing" />
+</android.support.constraint.ConstraintLayout>

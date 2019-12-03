@@ -1,6 +1,6 @@
 <resources>
 
-    <dimen name="mandatory_update_progress_height">5dp</dimen>
+    <dimen name="mandatory_update_progress_height">100dp</dimen>
 
     <dimen name="update_dialog_title_text_size">28sp</dimen>
     <dimen name="update_dialog_content_text_size">24sp</dimen>

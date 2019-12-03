@@ -82,4 +82,9 @@ public class MandatoryUpdateView extends ConstraintLayout {
     public void onConfigurationChanged() {
 
     }
+
+    public void update(float progress)
+    {
+        customizeProgressView.setProgress(progress);
+    }
 }

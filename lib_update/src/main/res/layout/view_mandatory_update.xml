@@ -10,12 +10,13 @@
         android:id="@+id/downloadProgressView"
         android:layout_width="0dp"
         android:layout_height="@dimen/mandatory_update_progress_height"
+        android:background="@color/translucent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.4"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintWidth_percent="0.8" />
 
 
 </android.support.constraint.ConstraintLayout>

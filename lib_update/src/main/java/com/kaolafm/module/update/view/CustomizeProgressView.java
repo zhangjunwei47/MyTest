@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -37,7 +38,6 @@ public class CustomizeProgressView extends ConstraintLayout {
         mConstraintSet = new ConstraintSet();
         inflate(getContext(), R.layout.view_customize_progress, this);
         mProgressView = findViewById(R.id.downloadProgressing);
-        setBackgroundColor(getResources().getColor(R.color.update_progress_bg_color, null));
     }
 
 
@@ -48,12 +48,14 @@ public class CustomizeProgressView extends ConstraintLayout {
      */
     public void setProgress(float progress) {
         int currentProgress = (int) (progress * 1000);
-        if (mOldProgress == currentProgress) {
+        if (mOldProgress == currentProgress || mOldProgress>1000) {
             return;
         }
+        Log.e("logx","xxxxxxxx progress = "+ mOldProgress);
         setViewVisibility(mProgressView, View.VISIBLE);
         mOldProgress = currentProgress;
         mConstraintSet.clone(this);
+        mConstraintSet.connect(mProgressView.getId(),);
         mConstraintSet.constrainPercentWidth(mProgressView.getId(), progress);
         mConstraintSet.applyTo(this);
     }

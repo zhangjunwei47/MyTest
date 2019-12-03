@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="translucent">#00000000</color>
 
     <color name="kaolared">#1b000000</color>
     <color name="update_customize_dialog_bg_color">#232C4F</color>
