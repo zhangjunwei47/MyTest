@@ -103,4 +103,9 @@ public class UpdateConstant {
      * 用户选择结果
      */
     public static String MESSAGE_KEY_CHOOSE_RESULT = "choose_result";
+
+    public static String MESSAGE_KEY_PLUGIN_INFO_VERSION = "plugin_info_version";
+    public static String MESSAGE_KEY_PLUGIN_INFO_SIZE = "plugin_info_size";
+    public static String MESSAGE_KEY_PLUGIN_INFO_UPDATE_INFO = "plugin_info_update_info";
+
 }

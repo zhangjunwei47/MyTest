@@ -1,12 +1,14 @@
 package com.kaolafm.module.update;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 
 import com.kaolafm.module.update.listener.IRequestDownloadInfoCallback;
 import com.kaolafm.module.update.modle.PluginInfo;
+import com.kaolafm.module.update.utils.UpdateConstant;
 import com.kaolafm.module.update.utils.UpdateLog;
 import com.kaolafm.module.update.view.MandatoryUpdateView;
 import com.kaolafm.module.update.view.RecommendUpdateView;
@@ -32,14 +34,15 @@ public class UpdateActivity extends FragmentActivity {
 //        });
 //        progressView = findViewById(R.id.progressView);
 //        testBegin();
-        start(mContext);
+        startPluginCheck(mContext);
     }
 
-    public void start(Context context) {
+    public void startPluginCheck(Context context) {
         boolean isHasDown = UpdateManager.getInstance(context).isHasDownloadedPlugin();
         if (isHasDown) {
             String path = UpdateManager.getInstance(context).getDownloadedPluginPath();
             UpdateLog.d("加载路径 = " + path);
+            // TODO: 2019-12-04 加载插件
             UpdateManager.getInstance(context).loadPluginSuccess();
             //加载插件
         } else {
@@ -48,14 +51,13 @@ public class UpdateActivity extends FragmentActivity {
                     @Override
                     public void pluginNeedDownload(boolean isMandatory, boolean isNeedShowToast, String toastMessage) {
                         if (isMandatory) {
-                            //强制升级, 显示进度条
                             UpdateLog.d("强制下载插件...");
-
+                            // TODO: 2019-12-04 显示进度条
                             return;
                         }
                         //进入首页
                         if (isNeedShowToast) {
-                            showDialog();
+                            sendBroadcastToPlugin();
                             UpdateLog.d("需要弹出提示框下载...");
                         } else {
                             UpdateLog.d("不需要弹出提示框下载...");
@@ -64,16 +66,37 @@ public class UpdateActivity extends FragmentActivity {
 
                     @Override
                     public void noPluginNeedDownload() {
-                        //进入首页
+                        startPlugin();
                         UpdateLog.d("没有需要下载的插件...");
                     }
                 });
             } else {
-                //进入首页
+                startPlugin();
                 UpdateLog.d("没有条件下载插件...");
             }
         }
+    }
 
+    /**
+     * 开始进入首页
+     */
+    private void startPlugin() {
+
+    }
+
+    /**
+     * 发送升级信息到客户端
+     */
+    private void sendBroadcastToPlugin() {
+        PluginInfo pluginInfo = UpdateManager.getInstance(mContext).getCurrentPluginInfo();
+        if (pluginInfo == null) {
+            return;
+        }
+        Intent intent = new Intent();
+        intent.putExtra(UpdateConstant.MESSAGE_KEY_PLUGIN_INFO_VERSION, pluginInfo.getVersionNum());
+        intent.putExtra(UpdateConstant.MESSAGE_KEY_PLUGIN_INFO_SIZE, pluginInfo.getFileSize());
+        intent.putExtra(UpdateConstant.MESSAGE_KEY_PLUGIN_INFO_UPDATE_INFO, pluginInfo.getUpgradeNotes());
+        sendBroadcast(intent);
     }
 
     float progress = 0.0f;

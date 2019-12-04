@@ -27,4 +27,21 @@ public class PluginUpdateReceiver extends BroadcastReceiver {
             }
         }
     }
+
+
+    private void parsingReceiver(String action, Intent intent) {
+        if (intent == null) {
+            return;
+        }
+        if (TextUtils.isEmpty(action)) {
+            return;
+        }
+        if (!action.equals(UpdateConstant.MESSAGE_UPDATE_NEED_USER_CHOOSE)) {
+            return;
+        }
+        String version = intent.getStringExtra(UpdateConstant.MESSAGE_KEY_PLUGIN_INFO_VERSION);
+        String size = intent.getStringExtra(UpdateConstant.MESSAGE_KEY_PLUGIN_INFO_SIZE);
+        String updateInfo = intent.getStringExtra(UpdateConstant.MESSAGE_KEY_PLUGIN_INFO_UPDATE_INFO);
+
+    }
 }
