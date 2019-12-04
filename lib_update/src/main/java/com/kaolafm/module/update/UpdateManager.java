@@ -12,10 +12,12 @@ import com.kaolafm.module.update.network.RequestManager;
 import com.kaolafm.module.update.utils.DownloadCacheInfoUtil;
 import com.kaolafm.module.update.utils.FileDigestUtils;
 import com.kaolafm.module.update.utils.ReportUtil;
+import com.kaolafm.module.update.utils.RequestParamsCacheInfoUtil;
 import com.kaolafm.module.update.utils.ThreadUtil;
 import com.kaolafm.module.update.utils.UpdateConditionUtil;
 import com.kaolafm.module.update.utils.UpdateConstant;
 import com.kaolafm.module.update.utils.UpdateLog;
+import com.kaolafm.module.update.utils.UpdateVersionCacheInfoUtil;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -255,14 +257,42 @@ public class UpdateManager {
     }
 
     /**
+     * 开始下载
+     */
+    public void startDownloadNewVersion() {
+        UpdateLog.d("用户同意开始新下载");
+        startDownloadNewVersion(mPluginInfo);
+    }
+
+    /**
      * 开始一个新的版本下载
      *
      * @param pluginInfo
      */
     private void startDownloadNewVersion(PluginInfo pluginInfo) {
         UpdateLog.d("开始新下载");
-        DownloadCacheInfoUtil.setPluginInfo(mContext, pluginInfo);
+        cacheInfo(pluginInfo);
         mDownloadManager.startDownload(true);
+    }
+
+    /**
+     * 缓存升级信息
+     *
+     * @param pluginInfo
+     */
+    private void cacheInfo(PluginInfo pluginInfo) {
+        if (pluginInfo == null) {
+            return;
+        }
+        DownloadCacheInfoUtil.setPluginInfo(mContext, pluginInfo);
+        UpdateVersionCacheInfoUtil.setOldVersion(mContext, RequestParamsCacheInfoUtil.getAppVersion(mContext));
+        String updateType = UpdateVersionCacheInfoUtil.TYPE_UPDATE_BACKGROUND;
+        if (pluginInfo.isMandatoryUpdate()) {
+            updateType = UpdateVersionCacheInfoUtil.TYPE_UPDATE_FORCE;
+        } else if (pluginInfo.isShowToast()) {
+            updateType = UpdateVersionCacheInfoUtil.TYPE_UPDATE_RECOMMEND;
+        }
+        UpdateVersionCacheInfoUtil.setUpdateType(mContext, updateType);
     }
 
     /**
@@ -271,14 +301,6 @@ public class UpdateManager {
     private void clearCache() {
         mDownloadManager.deleteOldFile(DownloadCacheInfoUtil.getDownloadPath(mContext));
         DownloadCacheInfoUtil.clearCacheData(mContext);
-    }
-
-    /**
-     * 开始下载
-     */
-    public void startDownloadNewVersion() {
-        UpdateLog.d("用户同意开始新下载");
-        startDownloadNewVersion(mPluginInfo);
     }
 
     /**
@@ -411,6 +433,7 @@ public class UpdateManager {
 
     /**
      * 获取要升级的信息
+     *
      * @return
      */
     public PluginInfo getCurrentPluginInfo() {

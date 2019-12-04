@@ -20,7 +20,8 @@ public class ReportUtilx {
     public static void reportUpdate(Context context) {
         String updateType = UpdateVersionCacheInfoUtil.getUpdateType(context);
         String oldVersion = UpdateVersionCacheInfoUtil.getOldVersion(context);
-        if (!TextUtils.isEmpty(updateType)) {
+        boolean isHasUpdate = UpdateVersionCacheInfoUtil.isHasUpdate(context);
+        if (isHasUpdate) {
             Logging.d(ReportConstants.REPORT_TAG, "有插件升级");
             reportVersion(context, updateType, oldVersion);
             return;
@@ -60,6 +61,6 @@ public class ReportUtilx {
         changeReportEvent.setRemarks1(RequestParamsCacheInfoUtil.getAppVersion(context));
         changeReportEvent.setRemarks2(oldVersion);
         ReportHelper.getInstance().addEvent(changeReportEvent);
-        UpdateVersionCacheInfoUtil.clearAlldata(context);
+        UpdateVersionCacheInfoUtil.clearAllData(context);
     }
 }

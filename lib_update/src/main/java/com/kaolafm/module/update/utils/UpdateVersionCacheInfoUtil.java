@@ -7,10 +7,14 @@ import android.content.SharedPreferences;
  * 升级版本缓存信息工具
  */
 public class UpdateVersionCacheInfoUtil {
+
+    public static final String TYPE_UPDATE_RECOMMEND = "1";
+    public static final String TYPE_UPDATE_BACKGROUND = "2";
+    public static final String TYPE_UPDATE_FORCE = "3";
     private static final String PREFERENCE_NAME = "UpdateInfo.sp";
     private static final String KEY_OLD_VERSION = "old_version";
     private static final String KEY_UPDATE_TYPE = "update_type";
-
+    private static final String KEY_HAS_UPDATE = "has_update";
     private static SharedPreferences mSharedPreferences;
 
     /**
@@ -44,11 +48,25 @@ public class UpdateVersionCacheInfoUtil {
         return oldVersion;
     }
 
-    public static void clearAlldata(Context context) {
+    /**
+     * 是否有升级
+     *
+     * @return
+     */
+    public static boolean isHasUpdate(Context context) {
+        return getSharedPreferences(context).getBoolean(KEY_HAS_UPDATE, false);
+    }
+
+    public static void setHasUpdate(Context context, boolean isHasUpdate) {
+        getSharedPreferences(context).edit().putBoolean(KEY_HAS_UPDATE, isHasUpdate).apply();
+    }
+
+    public static void clearAllData(Context context) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(KEY_UPDATE_TYPE, UpdateConstant.BLANK_STR);
         editor.putString(KEY_OLD_VERSION, UpdateConstant.BLANK_STR);
+        editor.putBoolean(KEY_HAS_UPDATE, false);
         editor.apply();
     }
 
