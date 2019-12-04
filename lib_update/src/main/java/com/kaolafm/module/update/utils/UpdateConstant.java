@@ -89,4 +89,18 @@ public class UpdateConstant {
      */
     public static final String UPDATE_ERROR_REPORT_EVENT_CODE = "100007";
 
+    /**
+     * 用户选择升级结果
+     */
+    public static String MESSAGE_USER_CHOOSE_UPDATE_RESULT = "com.kaola.user.choose.update.result";
+
+    /**
+     * 推荐升级,需要用户选择
+     */
+    public static String MESSAGE_UPDATE_NEED_USER_CHOOSE = "com.kaola.update.need.user.choose";
+
+    /**
+     * 用户选择结果
+     */
+    public static String MESSAGE_KEY_CHOOSE_RESULT = "choose_result";
 }

@@ -34,5 +34,11 @@
             android:configChanges="orientation|screenSize|locale|layoutDirection|keyboard|screenLayout|uiMode"
             android:launchMode="singleTask"
             android:screenOrientation="unspecified" />
+        <receiver android:name=".receiver.PluginUpdateReceiver">
+            <intent-filter>
+                <action android:name="com.kaola.user.choose.update.result" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".service.DownloadService" />
     </application>
 </manifest>

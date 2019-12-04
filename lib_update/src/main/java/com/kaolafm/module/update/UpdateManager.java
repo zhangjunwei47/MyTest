@@ -1,14 +1,18 @@
 package com.kaolafm.module.update;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.text.TextUtils;
 
-import com.kaolafm.module.update.download.DownloadManager;
 import com.kaolafm.module.update.listener.IDownloadListener;
 import com.kaolafm.module.update.listener.IRequestDownloadInfoCallback;
 import com.kaolafm.module.update.listener.RequestCallback;
 import com.kaolafm.module.update.modle.PluginInfo;
 import com.kaolafm.module.update.network.RequestManager;
+import com.kaolafm.module.update.service.DownloadService;
 import com.kaolafm.module.update.utils.DownloadCacheInfoUtil;
 import com.kaolafm.module.update.utils.FileDigestUtils;
 import com.kaolafm.module.update.utils.ReportUtil;
@@ -30,10 +34,6 @@ public class UpdateManager {
     public static Context mContext;
     private static volatile UpdateManager mInstance;
     /**
-     * 下载管理
-     */
-    private DownloadManager mDownloadManager;
-    /**
      * 网络请求管理
      */
     private RequestManager mRequestManager;
@@ -45,12 +45,13 @@ public class UpdateManager {
      */
     private PluginInfo mPluginInfo;
 
+    private DownloadService.DownloadServiceBinder mDownloadServiceBinder;
+
     private UpdateManager(Context context) {
         mContext = context;
-        mDownloadManager = new DownloadManager();
-        mDownloadManager.setDownloadListener(iDownloadListener);
         mRequestManager = new RequestManager();
         mDownloadArrayList = new ArrayList<>();
+        initDownloadService();
     }
 
     public static UpdateManager getInstance(Context context) {
@@ -222,7 +223,9 @@ public class UpdateManager {
         UpdateLog.d("旧版本: " + oldVersion + " 新版本: " + newVersion);
         if (oldVersion.equals(newVersion)) {
             UpdateLog.d("升级信息版本相同, 继续下载");
-            mDownloadManager.startDownload(false);
+            if (mDownloadServiceBinder != null) {
+                mDownloadServiceBinder.startDownload(false);
+            }
         } else {
             UpdateLog.d("升级信息版本不相同, 清空数据, 开始新的下载");
             cacheIsDifferentNetwork(pluginInfo, iRequestDownloadInfoCallback);
@@ -272,7 +275,9 @@ public class UpdateManager {
     private void startDownloadNewVersion(PluginInfo pluginInfo) {
         UpdateLog.d("开始新下载");
         cacheInfo(pluginInfo);
-        mDownloadManager.startDownload(true);
+        if (mDownloadServiceBinder != null) {
+            mDownloadServiceBinder.startDownload(true);
+        }
     }
 
     /**
@@ -299,7 +304,9 @@ public class UpdateManager {
      * 清除本地所有缓存
      */
     private void clearCache() {
-        mDownloadManager.deleteOldFile(DownloadCacheInfoUtil.getDownloadPath(mContext));
+        if (mDownloadServiceBinder != null) {
+            mDownloadServiceBinder.deleteOldFile(DownloadCacheInfoUtil.getDownloadPath(mContext));
+        }
         DownloadCacheInfoUtil.clearCacheData(mContext);
     }
 
@@ -409,14 +416,19 @@ public class UpdateManager {
             UpdateLog.d("complete download... md5 : " + md5str);
             if (md5str.equals(DownloadCacheInfoUtil.getMd5())) {
                 UpdateLog.d("complete download... md5 计算成功");
-                String path = mDownloadManager.renameDownloadFile();
-                DownloadCacheInfoUtil.setDownloadState(mContext, UpdateConstant.DOWNLOAD_STATE_COMPLETE);
-                DownloadCacheInfoUtil.setDownloadPath(mContext, path);
-                notifyDownloadStatus(UpdateConstant.DOWNLOAD_STATE_COMPLETE, 0, 0);
+                if (mDownloadServiceBinder != null) {
+                    String path = mDownloadServiceBinder.renameDownloadFile();
+                    DownloadCacheInfoUtil.setDownloadState(mContext, UpdateConstant.DOWNLOAD_STATE_COMPLETE);
+                    DownloadCacheInfoUtil.setDownloadPath(mContext, path);
+                    notifyDownloadStatus(UpdateConstant.DOWNLOAD_STATE_COMPLETE, 0, 0);
+                }
             } else {
                 UpdateLog.d("complete download... md5 计算失败");
-                mDownloadManager.deleteOldFile(DownloadCacheInfoUtil.getDownloadPath(mContext));
-                DownloadCacheInfoUtil.clearCacheData(mContext);
+                if (mDownloadServiceBinder != null) {
+                    mDownloadServiceBinder.deleteOldFile(DownloadCacheInfoUtil.getDownloadPath(mContext));
+                    DownloadCacheInfoUtil.clearCacheData(mContext);
+                }
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -439,4 +451,36 @@ public class UpdateManager {
     public PluginInfo getCurrentPluginInfo() {
         return mPluginInfo;
     }
+
+
+    /**
+     * 初始化downloadService
+     */
+    private void initDownloadService() {
+        Intent intent = new Intent();
+        intent.setClass(mContext, DownloadService.class);
+        mContext.bindService(intent, connection, Context.BIND_AUTO_CREATE);
+    }
+
+    /**
+     * 销毁service
+     */
+    public void destroyService() {
+        mContext.unbindService(connection);
+    }
+
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            if (service instanceof DownloadService.DownloadServiceBinder) {
+                mDownloadServiceBinder = (DownloadService.DownloadServiceBinder) service;
+                mDownloadServiceBinder.setDownloadListener(iDownloadListener);
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
 }

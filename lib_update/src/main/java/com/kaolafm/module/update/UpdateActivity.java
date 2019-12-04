@@ -3,7 +3,6 @@ package com.kaolafm.module.update;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.PluralsRes;
 import android.support.v4.app.FragmentActivity;
 
 import com.kaolafm.module.update.listener.IRequestDownloadInfoCallback;
@@ -21,6 +20,7 @@ import io.reactivex.functions.Consumer;
 public class UpdateActivity extends FragmentActivity {
     public static Context mContext;
     private MandatoryUpdateView progressView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,16 +76,16 @@ public class UpdateActivity extends FragmentActivity {
     }
 
     float progress = 0.0f;
-    private void testBegin()
-    {
+
+    private void testBegin() {
 
         Observable.interval(100, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(Long aLong) throws Exception {
-                        progress = progress+ 0.01f;
+                        progress = progress + 0.01f;
 
-                            progressView.update(progress);
+                        progressView.update(progress);
 
                     }
                 });
