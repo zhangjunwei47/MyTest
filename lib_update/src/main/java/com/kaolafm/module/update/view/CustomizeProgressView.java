@@ -13,7 +13,6 @@ import com.kaolafm.module.update.R;
  * 自定义进度条
  */
 public class CustomizeProgressView extends ConstraintLayout {
-
     /**
      * 最大进度
      */
@@ -43,14 +42,13 @@ public class CustomizeProgressView extends ConstraintLayout {
         mProgressView = findViewById(R.id.downloadProgressing);
     }
 
-
     /**
      * 设置进度
      *
      * @param progress
      */
     public void setProgress(float progress) {
-        int currentProgress = (int) (progress * 1000);
+        int currentProgress = (int) (progress * MAX_PROGRESS);
         if (mOldProgress == currentProgress || mOldProgress > MAX_PROGRESS) {
             return;
         }
