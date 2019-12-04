@@ -79,7 +79,7 @@ dependencies {
     implementation rootProject.ext.dependencies["exoplayer-core"]
     implementation rootProject.ext.dependencies["exoplayer-dash"]
     implementation rootProject.ext.dependencies["android-permissions1"]
-    implementation rootProject.ext.dependencies["openSDK"]
+    //implementation rootProject.ext.dependencies["openSDK"]
     implementation rootProject.ext.dependencies["multidex"]
 
 

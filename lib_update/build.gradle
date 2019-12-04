@@ -58,5 +58,5 @@ dependencies {
 
     implementation rootProject.ext.dependencies["appcompat-v7"]
 
-    compileOnly dependent["openSDK"]
+    //compileOnly dependent["openSDK"]
 }

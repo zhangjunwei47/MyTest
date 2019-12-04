@@ -466,6 +466,7 @@ public class UpdateManager {
      * 销毁service
      */
     public void destroyService() {
+        UpdateLog.d("启动下载service");
         mContext.unbindService(connection);
     }
 
@@ -473,6 +474,7 @@ public class UpdateManager {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             if (service instanceof DownloadService.DownloadServiceBinder) {
+                UpdateLog.d("下载service已经启动完毕");
                 mDownloadServiceBinder = (DownloadService.DownloadServiceBinder) service;
                 mDownloadServiceBinder.setDownloadListener(iDownloadListener);
             }
@@ -480,7 +482,7 @@ public class UpdateManager {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-
+            UpdateLog.d("下载service已经停止工作");
         }
     };
 }

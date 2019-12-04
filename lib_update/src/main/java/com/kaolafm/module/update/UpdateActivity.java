@@ -27,11 +27,12 @@ public class UpdateActivity extends FragmentActivity {
         mContext = getApplicationContext();
         setContentView(R.layout.update_activity);
         //   start(getApplicationContext());
-        findViewById(R.id.updateBtn).setOnClickListener(v -> {
-            showDialog();
-        });
-        progressView = findViewById(R.id.progressView);
-        testBegin();
+//        findViewById(R.id.updateBtn).setOnClickListener(v -> {
+//            showDialog();
+//        });
+//        progressView = findViewById(R.id.progressView);
+//        testBegin();
+        start(mContext);
     }
 
     public void start(Context context) {
