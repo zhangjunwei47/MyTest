@@ -51,11 +51,9 @@ public class CustomizeProgressView extends ConstraintLayout {
         if (mOldProgress == currentProgress || mOldProgress>1000) {
             return;
         }
-        Log.e("logx","xxxxxxxx progress = "+ mOldProgress);
         setViewVisibility(mProgressView, View.VISIBLE);
         mOldProgress = currentProgress;
         mConstraintSet.clone(this);
-        mConstraintSet.connect(mProgressView.getId(),);
         mConstraintSet.constrainPercentWidth(mProgressView.getId(), progress);
         mConstraintSet.applyTo(this);
     }
