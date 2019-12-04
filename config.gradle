@@ -94,7 +94,7 @@ ext {
             "kradio-player-sdk"   : "com.kaolafm:kradio-player-sdk:1.0.1",
             "kradio-playlist"     : "com.kaolafm:kradio-playlist:1.0.1",
             "kradio-report"       : "com.kaolafm:kradio-report-sdk:1.0.1",
-            "openSDK"             : "com.kaolafm:open-sdk:1.5.2.2",
+            "openSDK"             : "com.kaolafm:open-sdk:1.5.4.2",
             "exoplayer-core"      : "com.google.android.exoplayer:exoplayer-core:2.10.1",
             "exoplayer-dash"      : "com.google.android.exoplayer:exoplayer-dash:2.10.1",
 

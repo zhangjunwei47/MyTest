@@ -22,13 +22,17 @@ allprojects {
     repositories {
         google()
         jcenter()
+
         maven {
-            url "https://raw.githubusercontent.com/tingban/maven-repository/tongyong"
+            url "https://raw.githubusercontent.com/tingban/maven-repository/release"
         }
         maven { url "https://jitpack.io" }
         maven {
-            url "http://nexus.kaolafm.com/nexus/content/groups/public/"
+            url "http://nexus.kaolafm.com/nexus/content/repositories/releases/"
         }
+//        maven {
+//            url "http://nexus.kaolafm.com/nexus/content/groups/public/"
+//        }
 //        maven {
 //            url "https://raw.githubusercontent.com/tingban/maven-repository/release"
 //        }
