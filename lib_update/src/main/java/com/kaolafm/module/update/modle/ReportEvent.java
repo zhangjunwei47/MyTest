@@ -1,5 +1,8 @@
 package com.kaolafm.module.update.modle;
 
+/**
+ * 升级失败事件
+ */
 public class ReportEvent {
     private String appid;
     private String udid;
@@ -97,6 +100,13 @@ public class ReportEvent {
      * 该应用所属的开发者id
      */
     private String developer;
+
+    private String result;
+    private String type;
+    private String message;
+    private String remarks1;
+    private String remarks2;
+    private String remarks3 = "1";
 
     public String getAppid() {
         return appid;
@@ -368,5 +378,53 @@ public class ReportEvent {
 
     public void setDeveloper(String developer) {
         this.developer = developer;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getRemarks1() {
+        return remarks1;
+    }
+
+    public void setRemarks1(String remarks1) {
+        this.remarks1 = remarks1;
+    }
+
+    public String getRemarks2() {
+        return remarks2;
+    }
+
+    public void setRemarks2(String remarks2) {
+        this.remarks2 = remarks2;
+    }
+
+    public String getRemarks3() {
+        return remarks3;
+    }
+
+    public void setRemarks3(String remarks3) {
+        this.remarks3 = remarks3;
     }
 }

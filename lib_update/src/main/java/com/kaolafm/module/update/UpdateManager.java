@@ -150,7 +150,7 @@ public class UpdateManager {
 
         if (!isHasConditionDownload()) {
             // TODO: 2019-11-27 具体原因
-            reportUpdateError(1);
+            reportUpdateError(1, UpdateConstant.BLANK_STR);
             if (iRequestDownloadInfoCallback != null) {
                 iRequestDownloadInfoCallback.noPluginNeedDownload();
             }
@@ -426,8 +426,8 @@ public class UpdateManager {
     /**
      * 上报升级失败
      */
-    public void reportUpdateError(int errorCode) {
-        String eventUrl = ReportUtil.getEvent(errorCode);
+    public void reportUpdateError(int errorCode, String message) {
+        String eventUrl = ReportUtil.getEvent(mContext, errorCode, message);
         mRequestManager.reportUpdateResultState(eventUrl);
     }
 
