@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -15,6 +14,10 @@ import com.kaolafm.module.update.R;
  */
 public class CustomizeProgressView extends ConstraintLayout {
 
+    /**
+     * 最大进度
+     */
+    private static int MAX_PROGRESS = 1000;
     private int mOldProgress;
     private ImageView mProgressView;
     private ConstraintSet mConstraintSet;
@@ -48,7 +51,7 @@ public class CustomizeProgressView extends ConstraintLayout {
      */
     public void setProgress(float progress) {
         int currentProgress = (int) (progress * 1000);
-        if (mOldProgress == currentProgress || mOldProgress>1000) {
+        if (mOldProgress == currentProgress || mOldProgress > MAX_PROGRESS) {
             return;
         }
         setViewVisibility(mProgressView, View.VISIBLE);
