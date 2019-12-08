@@ -1,8 +1,8 @@
 package com.kaolafm.module.update.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,56 +25,51 @@ import io.reactivex.functions.Consumer;
 public class MandatoryUpdateView extends ConstraintLayout {
     public static final int SHOW_TYPE_LOADING = 1;
     public static final int SHOW_TYPE_DOWNLOADING = 2;
-    public static final float MIN_PROGRESS_STEP_VALUE = 0.01F;
-    public static final float PROGRESS_DEFAULT_VALUE = 0.0F;
-    private DownloadListener mDownloadListener;
-    private ImageView loadingView;
-    private ImageView downloadProgressingBg;
-    private ImageView carProgress;
-    private ConstraintLayout mainLayout;
-    private TextView messageTextView;
     private static int MAX_PROGRESS = 1000;
+
+    private static final float MIN_PROGRESS_STEP_VALUE = 0.01F;
+    private static final float PROGRESS_DEFAULT_VALUE = 0.0F;
+
+    private DownloadListener mDownloadListener;
+
+    private ImageView loadingView;
+    private ImageView carProgress;
+    private TextView messageTextView;
+
     private int mOldProgress;
-    private ConstraintSet mConstraintSet;
     private int mShowType = SHOW_TYPE_LOADING;
     private float progress = PROGRESS_DEFAULT_VALUE;
 
     public MandatoryUpdateView(Context context) {
         super(context);
-        initView();
+        initView(null);
     }
 
     public MandatoryUpdateView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initView();
+        initView(attrs);
     }
 
     public MandatoryUpdateView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView();
+        initView(attrs);
     }
 
-    public void setShowType(int type) {
-        mShowType = type;
-        if (mShowType == SHOW_TYPE_LOADING) {
-
-        } else {
-
+    private void initView(AttributeSet attrs) {
+        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.MandatoryUpdateView, 0, 0);
+        try {
+            mShowType = ta.getInt(R.styleable.MandatoryUpdateView_view_type, 0);
+        } finally {
+            ta.recycle();
         }
-        setMessageText();
-    }
-
-    private void initView() {
         inflate(getContext(), R.layout.view_mandatory_update, this);
         carProgress = findViewById(R.id.downloadCar);
-        mainLayout = findViewById(R.id.mainLayout);
-        mConstraintSet = new ConstraintSet();
+
         mDownloadListener = new DownloadListener(this);
         loadingView = findViewById(R.id.downloadProgressing);
-        downloadProgressingBg = findViewById(R.id.downloadProgressingBg);
         messageTextView = findViewById(R.id.messageTextView);
         UpdateManager.getInstance(getContext()).addDownloadStatusListener(mDownloadListener);
-        loading();
+        setMessageText();
     }
 
     private static class DownloadListener implements IDownloadListener {
@@ -92,14 +87,20 @@ public class MandatoryUpdateView extends ConstraintLayout {
         @Override
         public void loading(int progress, int totalSize) {
             MandatoryUpdateView mandatoryUpdateView = viewWeakReference.get();
-//            if (mandatoryUpdateView != null) {
-//                mandatoryUpdateView.customizeProgressView.setProgress((float) progress / (float) totalSize);
-//            }
+            if (mandatoryUpdateView != null) {
+                float tempFloat = ((float) progress / (float) totalSize);
+                mandatoryUpdateView.updateAnimation(tempFloat);
+                mandatoryUpdateView.setDownloadIngProgressText(tempFloat);
+            }
         }
 
         @Override
         public void complete() {
-
+            MandatoryUpdateView mandatoryUpdateView = viewWeakReference.get();
+            if (mandatoryUpdateView != null) {
+                mandatoryUpdateView.resetLoadingView();
+                mandatoryUpdateView.startLoadingPlugin();
+            }
         }
 
         @Override
@@ -129,13 +130,25 @@ public class MandatoryUpdateView extends ConstraintLayout {
         }
     }
 
-    private void getDownloadIngProgress(float progress) {
+    /**
+     * @param progress
+     */
+    private void setDownloadIngProgressText(float progress) {
+        int currentProgress = (int) (progress * MAX_PROGRESS);
+        if (mOldProgress == currentProgress || mOldProgress > MAX_PROGRESS) {
+            return;
+        }
         int progressInt = (int) (progress * 100);
         messageTextView.setText(getResources().getString(R.string.update_downloading_plugin) + progressInt + "%");
     }
 
 
-    public void updateNew(float progress) {
+    /**
+     * 更新进度动画
+     *
+     * @param progress
+     */
+    public void updateAnimation(float progress) {
         int currentProgress = (int) (progress * MAX_PROGRESS);
         if (mOldProgress == currentProgress || mOldProgress > MAX_PROGRESS) {
             return;
@@ -171,12 +184,11 @@ public class MandatoryUpdateView extends ConstraintLayout {
             mOldProgress = 0;
             return;
         }
-        updateNew(progress);
-        getDownloadIngProgress(progress);
+        updateAnimation(progress);
     }
 
 
-    private void loading() {
+    private void startLoadingPlugin() {
         Observable.interval(100, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
                     @Override
@@ -184,5 +196,15 @@ public class MandatoryUpdateView extends ConstraintLayout {
                         timer();
                     }
                 });
+        setMessageText();
     }
+
+    /**
+     * 回复动画ui
+     */
+    private void resetLoadingView() {
+        progress = MIN_PROGRESS_STEP_VALUE;
+        updateAnimation(progress);
+    }
+
 }

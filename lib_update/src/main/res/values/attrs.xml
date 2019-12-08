@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--播放-->
+    <declare-styleable name="MandatoryUpdateView">
+        <attr name="view_type" format="integer"></attr>
+    </declare-styleable>
+
+
+</resources>
