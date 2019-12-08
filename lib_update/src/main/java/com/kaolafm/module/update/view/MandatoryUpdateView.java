@@ -4,32 +4,40 @@ import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.kaolafm.module.update.R;
 import com.kaolafm.module.update.UpdateManager;
 import com.kaolafm.module.update.listener.IDownloadListener;
 
 import java.lang.ref.WeakReference;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 
 /**
  * 强制升级view
  */
 public class MandatoryUpdateView extends ConstraintLayout {
     public static final int SHOW_TYPE_LOADING = 1;
-    public static final int SHOW_TYPE_DOWNLOAING = 2;
-
-    DownloadListener mDownloadListener;
-    ImageView loadingView;
-    ImageView downloadProgressingBg;
-    ImageView carProgress;
-    ConstraintLayout mainLayout;
+    public static final int SHOW_TYPE_DOWNLOADING = 2;
+    public static final float MIN_PROGRESS_STEP_VALUE = 0.01F;
+    public static final float PROGRESS_DEFAULT_VALUE = 0.0F;
+    private DownloadListener mDownloadListener;
+    private ImageView loadingView;
+    private ImageView downloadProgressingBg;
+    private ImageView carProgress;
+    private ConstraintLayout mainLayout;
+    private TextView messageTextView;
     private static int MAX_PROGRESS = 1000;
     private int mOldProgress;
     private ConstraintSet mConstraintSet;
-    private int mShowType;
+    private int mShowType = SHOW_TYPE_LOADING;
+    private float progress = PROGRESS_DEFAULT_VALUE;
 
     public MandatoryUpdateView(Context context) {
         super(context);
@@ -53,6 +61,7 @@ public class MandatoryUpdateView extends ConstraintLayout {
         } else {
 
         }
+        setMessageText();
     }
 
     private void initView() {
@@ -63,7 +72,9 @@ public class MandatoryUpdateView extends ConstraintLayout {
         mDownloadListener = new DownloadListener(this);
         loadingView = findViewById(R.id.downloadProgressing);
         downloadProgressingBg = findViewById(R.id.downloadProgressingBg);
+        messageTextView = findViewById(R.id.messageTextView);
         UpdateManager.getInstance(getContext()).addDownloadStatusListener(mDownloadListener);
+        loading();
     }
 
     private static class DownloadListener implements IDownloadListener {
@@ -110,41 +121,39 @@ public class MandatoryUpdateView extends ConstraintLayout {
 
     }
 
-    public void update(float progress) {
-
-        int currentProgress = (int) (progress * MAX_PROGRESS);
-        if (mOldProgress == currentProgress || mOldProgress > MAX_PROGRESS) {
-            return;
+    public void setMessageText() {
+        if (mShowType == SHOW_TYPE_LOADING) {
+            messageTextView.setText(getResources().getString(R.string.update_loading_plugin));
+        } else {
+            messageTextView.setText(getResources().getString(R.string.update_downloading_plugin));
         }
-        Log.e("logx", "xxxxxx 进度= " + mOldProgress + "xxxx = " + progress);
-        setViewVisibility(loadingView, View.VISIBLE);
-        mOldProgress = currentProgress;
-        mConstraintSet.clone(mainLayout);
-        mConstraintSet.constrainPercentWidth(loadingView.getId(), progress);
-        mConstraintSet.applyTo(mainLayout);
     }
+
+    private void getDownloadIngProgress(float progress) {
+        int progressInt = (int) (progress * 100);
+        messageTextView.setText(getResources().getString(R.string.update_downloading_plugin) + progressInt + "%");
+    }
+
 
     public void updateNew(float progress) {
         int currentProgress = (int) (progress * MAX_PROGRESS);
         if (mOldProgress == currentProgress || mOldProgress > MAX_PROGRESS) {
             return;
         }
-        Log.e("logx", "xxxxxx 进度= " + mOldProgress);
         setViewVisibility(loadingView, View.VISIBLE);
         mOldProgress = currentProgress;
-
         float progressPercent = progress;
-        ConstraintLayout.LayoutParams lparams = (ConstraintLayout.LayoutParams) loadingView.getLayoutParams();
-        lparams.width = 0;
-        lparams.height = LayoutParams.MATCH_PARENT;
-        lparams.matchConstraintPercentWidth = progressPercent;
-        lparams.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
-        lparams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
-        lparams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
-        loadingView.setLayoutParams(lparams);
-        ConstraintLayout.LayoutParams lparamsx = (ConstraintLayout.LayoutParams) carProgress.getLayoutParams();
-        lparamsx.leftMargin = loadingView.getWidth();
-        carProgress.setLayoutParams(lparamsx);
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) loadingView.getLayoutParams();
+        params.width = 0;
+        params.height = LayoutParams.MATCH_PARENT;
+        params.matchConstraintPercentWidth = progressPercent;
+        params.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+        params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+        params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+        loadingView.setLayoutParams(params);
+        ConstraintLayout.LayoutParams paramCar = (ConstraintLayout.LayoutParams) carProgress.getLayoutParams();
+        paramCar.leftMargin = loadingView.getWidth();
+        carProgress.setLayoutParams(paramCar);
     }
 
     private void setViewVisibility(View view, int visibility) {
@@ -152,5 +161,28 @@ public class MandatoryUpdateView extends ConstraintLayout {
             return;
         }
         view.setVisibility(visibility);
+    }
+
+    private void timer() {
+        progress = progress + MIN_PROGRESS_STEP_VALUE;
+        int progressInt = (int) (progress * MAX_PROGRESS);
+        if (progressInt > MAX_PROGRESS) {
+            progress = PROGRESS_DEFAULT_VALUE;
+            mOldProgress = 0;
+            return;
+        }
+        updateNew(progress);
+        getDownloadIngProgress(progress);
+    }
+
+
+    private void loading() {
+        Observable.interval(100, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        timer();
+                    }
+                });
     }
 }

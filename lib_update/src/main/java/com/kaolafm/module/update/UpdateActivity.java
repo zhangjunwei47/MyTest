@@ -103,16 +103,16 @@ public class UpdateActivity extends FragmentActivity {
 
     private void testBegin() {
 
-        Observable.interval(100, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Long>() {
-                    @Override
-                    public void accept(Long aLong) throws Exception {
-                        progress = progress + 0.01f;
-
-                        progressView.updateNew(progress);
-
-                    }
-                });
+//        Observable.interval(100, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Consumer<Long>() {
+//                    @Override
+//                    public void accept(Long aLong) throws Exception {
+//                        progress = progress + 0.01f;
+//
+//                        progressView.updateNew(progress);
+//
+//                    }
+//                });
     }
 
     private void showDialog() {
