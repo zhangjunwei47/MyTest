@@ -1,22 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/update_layout_bg_color">
 
 
-    <com.kaolafm.module.update.view.CustomizeProgressView
-        android:id="@+id/downloadProgressView"
+    <ImageView
+        android:id="@+id/downloadProgressingBg"
         android:layout_width="0dp"
-        android:layout_height="@dimen/mandatory_update_progress_height"
-        android:background="@color/translucent"
+        android:layout_height="5dp"
+        android:background="@color/update_progress_bg_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4"
-        app:layout_constraintWidth_percent="0.8" />
+        app:layout_constraintWidth_percent="0.7" />
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/sonLayout"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/downloadProgressingBg"
+        app:layout_constraintLeft_toLeftOf="@id/downloadProgressingBg"
+        app:layout_constraintRight_toRightOf="@id/downloadProgressingBg"
+        app:layout_constraintTop_toTopOf="@id/downloadProgressingBg">
+
+        <ImageView
+            android:id="@+id/downloadProgressing"
+            android:layout_width="0dp"
+            android:layout_height="5dp"
+            android:background="@drawable/shape_gradient"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/downloadCar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/translucent"
+        android:src="@mipmap/ic_car_progress"
+        app:layout_constraintBottom_toBottomOf="@id/downloadProgressingBg"
+        app:layout_constraintLeft_toLeftOf="@id/downloadProgressingBg" />
+
+    <ImageView
+        android:id="@+id/downloadCarBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/translucent"
+        android:src="@mipmap/ic_car_back_progress"
+        app:layout_constraintBottom_toTopOf="@id/downloadProgressingBg"
+        app:layout_constraintRight_toLeftOf="@id/downloadCar" />
+
+    <TextView
+        android:id="@+id/messageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/update_dialog_cancel_button_bg_color"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@id/sonLayout" />
 
 </android.support.constraint.ConstraintLayout>

@@ -19,4 +19,6 @@
     <string name="update_now_str">立即升级</string>
     <string name="update_later_str">以后再说</string>
 
+    <string name="update_loading_plugin">正在安装更新:</string>
+    <string name="update_downloading_plugin">正在下载更新:</string>
 </resources>

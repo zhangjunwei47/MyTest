@@ -32,9 +32,9 @@ public class UpdateActivity extends FragmentActivity {
 //        findViewById(R.id.updateBtn).setOnClickListener(v -> {
 //            showDialog();
 //        });
-//        progressView = findViewById(R.id.progressView);
-//        testBegin();
-        startPluginCheck(mContext);
+        progressView = findViewById(R.id.progressView);
+        testBegin();
+        //startPluginCheck(mContext);
     }
 
     public void startPluginCheck(Context context) {
@@ -109,7 +109,7 @@ public class UpdateActivity extends FragmentActivity {
                     public void accept(Long aLong) throws Exception {
                         progress = progress + 0.01f;
 
-                        progressView.update(progress);
+                        progressView.updateNew(progress);
 
                     }
                 });
