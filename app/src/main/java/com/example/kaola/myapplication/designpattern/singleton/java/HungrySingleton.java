@@ -9,7 +9,7 @@ public class HungrySingleton {
     /**
      * 第一种
      */
-    private static HungrySingleton hungrySingleton = new HungrySingleton();
+    private static HungrySingleton hungrySingleton;
 
     /**
      * 第二种

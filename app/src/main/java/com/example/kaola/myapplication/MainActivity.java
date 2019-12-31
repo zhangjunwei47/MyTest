@@ -14,6 +14,7 @@ import com.example.kaola.myapplication.other.AudioFocusActivity;
 import com.example.kaola.myapplication.player.PlayerActivity;
 import com.example.kaola.myapplication.servicelife.ServiceLifeActivity;
 import com.example.kaola.myapplication.util.DataBaseTestUtil;
+import com.example.kaola.myapplication.util.ThreadUtil;
 import com.example.kaola.myapplication.util.UuidUtil;
 import com.zc.test.R;
 
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, AudioFocusActivity.class));
         });
         findViewById(R.id.download_btn).setOnClickListener(v -> {
-
+            ThreadUtil.getInstance().addListenerTest();
         });
         findViewById(R.id.database_test_btn).setOnClickListener(v -> {
             DataBaseTestUtil.testx();
