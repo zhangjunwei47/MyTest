@@ -2,6 +2,7 @@ package com.example.kaola.myapplication.util;
 
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import io.reactivex.Single;
 import io.reactivex.functions.Consumer;
@@ -12,11 +13,11 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class ThreadUtil {
 
-    private ArrayList<IThreadUtil> mIThreadUtils;
+    private CopyOnWriteArrayList<IThreadUtil> mIThreadUtils;
     IThreadUtil iThreadUtil, iThreadUtil2;
 
     private ThreadUtil() {
-        mIThreadUtils = new ArrayList<>();
+        mIThreadUtils = new CopyOnWriteArrayList<>();
     }
 
     private static class THREAD_UTIL {
@@ -38,9 +39,9 @@ public class ThreadUtil {
 
 
     public void notifyListener() {
-        ArrayList<IThreadUtil> tempArrayList = (ArrayList<IThreadUtil>) mIThreadUtils.clone();
-        for (int i = 0; i < tempArrayList.size(); i++) {
-            IThreadUtil iThreadUtil = tempArrayList.get(i);
+      //  ArrayList<IThreadUtil> tempArrayList = (ArrayList<IThreadUtil>) mIThreadUtils.clone();
+        for (int i = 0; i < mIThreadUtils.size(); i++) {
+            IThreadUtil iThreadUtil = mIThreadUtils.get(i);
             iThreadUtil.change();
         }
     }

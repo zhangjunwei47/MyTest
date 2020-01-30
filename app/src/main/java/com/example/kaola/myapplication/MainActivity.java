@@ -1,8 +1,10 @@
 package com.example.kaola.myapplication;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.example.kaola.myapplication.animationtest.Animation2Activity;
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.database_test_btn).setOnClickListener(v -> {
             DataBaseTestUtil.testx();
         });
+        Log.e("logx","xxxxxx "+ Build.VERSION.RELEASE);
     }
 
 
