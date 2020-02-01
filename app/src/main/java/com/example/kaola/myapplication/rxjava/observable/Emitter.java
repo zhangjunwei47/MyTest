@@ -2,7 +2,9 @@ package com.example.kaola.myapplication.rxjava.observable;
 
 /**
  * @ClassName Emitter
- * @Description 用于发送数据
+ * @Description
+ * 1. 发射数据的接口
+ * 2. 对Callee的包装
  * @Author zhangchao
  * @Date 2020-01-31 09:06
  * @Version 1.0
