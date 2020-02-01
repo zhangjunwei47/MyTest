@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.database_test_btn).setOnClickListener(v -> {
             DataBaseTestUtil.testx();
         });
-        Log.e("logx","xxxxxx "+ Build.VERSION.RELEASE);
     }
 
 
