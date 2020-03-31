@@ -20,7 +20,9 @@ import com.example.kaola.myapplication.util.ThreadUtil;
 import com.example.kaola.myapplication.util.UuidUtil;
 import com.zc.test.R;
 
-
+/**
+ * 测试
+ */
 public class MainActivity extends AppCompatActivity {
 
 
