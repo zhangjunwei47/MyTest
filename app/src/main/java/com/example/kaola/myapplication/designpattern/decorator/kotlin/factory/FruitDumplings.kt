@@ -1,6 +1,7 @@
 package com.example.kaola.myapplication.designpattern.decorator.kotlin.factory
 
-import com.google.android.exoplayer2.util.Log
+import android.util.Log
+
 
 /**
  * @author zhangchao on 2019-07-18.

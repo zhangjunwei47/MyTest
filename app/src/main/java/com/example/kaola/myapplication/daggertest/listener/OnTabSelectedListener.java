@@ -1,6 +1,6 @@
 package com.example.kaola.myapplication.daggertest.listener;
 
-import android.support.design.widget.TabLayout;
+import com.google.android.material.tabs.TabLayout;
 
 /**
  * @author hugeterry(http://hugeterry.cn)

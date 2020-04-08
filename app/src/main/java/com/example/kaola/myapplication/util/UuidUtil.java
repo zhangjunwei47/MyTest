@@ -3,9 +3,9 @@ package com.example.kaola.myapplication.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
+import android.util.Log;
 
 import com.example.kaola.myapplication.MyApplication;
-import com.google.android.exoplayer2.util.Log;
 
 import java.io.*;
 import java.nio.file.Files;

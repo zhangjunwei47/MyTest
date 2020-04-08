@@ -1,6 +1,7 @@
 package com.example.kaola.myapplication.aspect;
 
-import com.google.android.exoplayer2.util.Log;
+
+import android.util.Log;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;

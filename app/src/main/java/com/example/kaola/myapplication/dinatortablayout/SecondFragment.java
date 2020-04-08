@@ -1,6 +1,6 @@
 package com.example.kaola.myapplication.dinatortablayout;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 /**
  * @author zhangchao on 2018/9/6.

@@ -2,12 +2,12 @@ package com.example.kaola.myapplication.other
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
 
 import android.media.AudioManager
-import com.google.android.exoplayer2.util.Log
+import android.util.Log
 import com.zc.test.R
 
 

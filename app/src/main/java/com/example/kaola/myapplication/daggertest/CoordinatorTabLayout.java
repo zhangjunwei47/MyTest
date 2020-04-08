@@ -5,14 +5,14 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -22,12 +22,9 @@ import android.view.WindowManager;
 
 import com.example.kaola.myapplication.daggertest.listener.AppBarStateChangeListener;
 import com.example.kaola.myapplication.daggertest.listener.OnTabSelectedListener;
-import com.example.kaola.myapplication.dinatortablayout.adapter.AllFragmentPageAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.zc.test.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.hugeterry.coordinatortablayout.listener.LoadHeaderImagesListener;
 
 /**
@@ -36,17 +33,17 @@ import cn.hugeterry.coordinatortablayout.listener.LoadHeaderImagesListener;
 
 public class CoordinatorTabLayout extends CoordinatorLayout {
 
-    @BindView(R.id.toolbar)
+    //@BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.collapsingToolbarLayout)
+    //@BindView(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout collapsingtoolbarlayout;
-    @BindView(R.id.slidingTabLayout)
+  //  @BindView(R.id.slidingTabLayout)
     SlidingTabLayout tl1;
-    @BindView(R.id.appBarLayout)
+   // @BindView(R.id.appBarLayout)
     AppBarLayout appBarLayout;
-    @BindView(R.id.titleToolbar)
+  //  @BindView(R.id.titleToolbar)
     ViewStub titleToolbar;
-    @BindView(R.id.headerContentVS)
+   // @BindView(R.id.headerContentVS)
     ViewStub headerContentVS;
 
     private Context mContext;
@@ -78,7 +75,6 @@ public class CoordinatorTabLayout extends CoordinatorLayout {
 
     private void initView(Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.view_coordinatortablayout, this, true);
-        ButterKnife.bind(this, view);
         initToolbar();
         setOnChangeListener();
 

@@ -2,14 +2,12 @@ package com.example.kaola.myapplication.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.RelativeLayout;
 
 
 import com.example.kaola.myapplication.util.AnimUtil;
 
-import skin.support.widget.SkinCompatRelativeLayout;
 
 /******************************************
  * 类描述:

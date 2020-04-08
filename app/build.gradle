@@ -48,8 +48,8 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     implementation rootProject.ext.dependencies["design"]
     implementation rootProject.ext.dependencies["appcompat-v7"]
     implementation rootProject.ext.dependencies["support-v4"]
@@ -70,27 +70,11 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
-    implementation rootProject.ext.dependencies["butterknife"]
-    annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-    implementation files('libs/OpenSdk_Player1.0.1.jar')
-   // implementation rootProject.ext.dependencies["kradio-base-util"]
-    implementation rootProject.ext.dependencies["exoplayer-core"]
-    implementation rootProject.ext.dependencies["exoplayer-dash"]
     implementation rootProject.ext.dependencies["android-permissions1"]
     //implementation rootProject.ext.dependencies["openSDK"]
     implementation rootProject.ext.dependencies["multidex"]
 
-
-    //    换肤
-    api 'skin.support:skin-support:2.2.3'
-    // skin-support basic widget
-    api 'skin.support:skin-support-design:2.2.3'
-    // skin-support-design material design support [selectable]
-    api 'skin.support:skin-support-cardview:2.2.3'
-    // skin-support-cardview CardView support [selectable]
-    api 'skin.support:skin-support-constraint-layout:2.2.3'
 }
 repositories {
     mavenCentral()

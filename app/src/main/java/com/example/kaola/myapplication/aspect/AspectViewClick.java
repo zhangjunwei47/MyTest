@@ -1,7 +1,6 @@
 package com.example.kaola.myapplication.aspect;
 
 import com.example.kaola.myapplication.util.DoubleClickUtil;
-import com.google.android.exoplayer2.util.Log;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;

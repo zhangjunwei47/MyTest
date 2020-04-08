@@ -1,7 +1,7 @@
 package com.example.kaola.myapplication.designpattern
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 
 
@@ -11,7 +11,6 @@ import com.example.kaola.myapplication.designpattern.decorator.java.MeatPancake
 import com.example.kaola.myapplication.designpattern.decorator.java.Pancake
 import com.example.kaola.myapplication.designpattern.decorator.kotlin.factory.Dumplings
 import com.example.kaola.myapplication.designpattern.decorator.kotlin.factory.DumplingsFactory
-import com.google.android.exoplayer2.util.Log
 import com.zc.test.R
 
 /**
@@ -42,7 +41,6 @@ class DesignPatternActivity : AppCompatActivity(), View.OnClickListener {
         pancake = EggsPancake(pancake)
         pancake = MeatPancake(pancake)
         pancake.decorator()
-        Log.e("logx", "总体价钱: " + pancake.price())
     }
 
     private fun testFacade() {
@@ -79,12 +77,10 @@ class DesignPatternActivity : AppCompatActivity(), View.OnClickListener {
     fun testFactory() {
         var dumplings = DumplingsFactory().getFruitDumplings()
         dumplings?.run {
-            Log.e("logx","获取到的饺子是: "+ name)
         }
 
         var dumplingsx = DumplingsFactory().getMeatDumplings()
         dumplingsx?.run {
-            Log.e("logx","获取到的饺子是: "+ name)
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.example.kaola.myapplication;
 
 import android.content.Context;
-import android.support.multidex.MultiDexApplication;
+import androidx.multidex.MultiDexApplication;
 
 import com.example.kaola.myapplication.util.LogToFile;
 

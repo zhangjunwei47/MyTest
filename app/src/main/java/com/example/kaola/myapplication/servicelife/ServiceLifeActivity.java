@@ -3,12 +3,10 @@ package com.example.kaola.myapplication.servicelife;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
-import com.google.android.exoplayer2.util.Log;
 import com.zc.test.R;
 
 /**
