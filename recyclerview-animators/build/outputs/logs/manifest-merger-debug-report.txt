@@ -1,0 +1,25 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:1:1-2:39
+INJECTED from /Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:1:1-2:39
+INJECTED from /Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:1:1-2:39
+	package
+		ADDED from /Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:2:3-37
+		INJECTED from /Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml
+		INJECTED from /Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:1:1-2:39
+uses-sdk
+INJECTED from /Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml
+INJECTED from /Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml
+INJECTED from /Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml
+INJECTED from /Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml
+		ADDED from /Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml
+		INJECTED from /Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml
+		ADDED from /Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml
+		INJECTED from /Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml

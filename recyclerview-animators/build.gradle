@@ -1,0 +1,33 @@
+apply plugin: 'com.android.library'
+
+android {
+  compileSdkVersion rootProject.ext.android.compileSdkVersion as int
+
+  defaultConfig {
+    minSdkVersion rootProject.ext.android.minSdkVersion as int
+    targetSdkVersion rootProject.ext.android.targetSdkVersion as int
+  }
+}
+
+dependencies {
+  implementation "androidx.recyclerview:recyclerview:1.0.0"
+}
+
+ext {
+  bintrayRepo = 'maven'
+  bintrayName = 'recyclerview-animators'
+  bintrayUserOrg = 'wasabeef'
+  publishedGroupId = 'jp.wasabeef'
+  libraryName = 'recyclerview-animators'
+  artifact = 'recyclerview-animators'
+  libraryDescription = 'Which provides simple Item animations to RecyclerView items'
+  siteUrl = 'https://github.com/wasabeef/recyclerview-animators'
+  gitUrl = 'https://github.com/wasabeef/recyclerview-animators.git'
+  issueUrl = 'https://github.com/wasabeef/recyclerview-animators/issues'
+  developerId = 'wasabeef'
+  developerName = 'Wasabeef'
+  developerEmail = 'dadadada.chop@gmail.com'
+  licenseName = 'The Apache Software License, Version 2.0'
+  licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+  allLicenses = ["Apache-2.0"]
+}
