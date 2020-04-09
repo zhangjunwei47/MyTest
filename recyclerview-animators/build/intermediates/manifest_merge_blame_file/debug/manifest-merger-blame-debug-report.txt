@@ -1,0 +1,47 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    xmlns:tools="http://schemas.android.com/tools"
+4    package="jp.wasabeef.recyclerview" >
+5
+6    <uses-sdk
+7        android:minSdkVersion="18"
+7-->/Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml
+8        android:targetSdkVersion="26" />
+8-->/Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml
+9
+10    <application
+10-->/Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:7:5-26:19
+11        android:allowBackup="true"
+11-->/Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:8:9-35
+12        android:label="@string/app_name"
+12-->/Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:9:9-41
+13        android:theme="@style/AppTheme"
+13-->/Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:10:9-40
+14        tools:ignore="GoogleAppIndexingWarning" >
+14-->/Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:11:9-48
+15        <activity
+15-->/Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:13:9-21:20
+16            android:name="jp.wasabeef.recyclerview.demo.MainActivity"
+16-->/Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:14:13-46
+17            android:label="@string/app_name" >
+17-->/Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:15:13-45
+18            <intent-filter>
+18-->/Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:17:13-20:29
+19                <action android:name="android.intent.action.MAIN" />
+19-->/Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:18:17-68
+19-->/Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:18:25-66
+20
+21                <category android:name="android.intent.category.LAUNCHER" />
+21-->/Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:19:17-76
+21-->/Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:19:27-74
+22            </intent-filter>
+23        </activity>
+24        <activity android:name="jp.wasabeef.recyclerview.demo.AnimatorSampleActivity" />
+24-->/Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:23:9-64
+24-->/Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:23:19-62
+25        <activity android:name="jp.wasabeef.recyclerview.demo.AdapterSampleActivity" />
+25-->/Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:24:9-63
+25-->/Users/zhangchao/workspace/MyTest/recyclerview-animators/src/main/AndroidManifest.xml:24:19-61
+26    </application>
+27
+28</manifest>

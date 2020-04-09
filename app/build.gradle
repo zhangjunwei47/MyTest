@@ -74,7 +74,7 @@ dependencies {
     implementation rootProject.ext.dependencies["android-permissions1"]
     //implementation rootProject.ext.dependencies["openSDK"]
     implementation rootProject.ext.dependencies["multidex"]
-
+    implementation project(':recyclerview-animators')
 }
 repositories {
     mavenCentral()

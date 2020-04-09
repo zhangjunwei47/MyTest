@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         findViewById(R.id.play_btn).setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, jp.wasabeef.recyclerview.demo.MainActivity.class));
         });
 
         findViewById(R.id.animation_btn).setOnClickListener(v -> {

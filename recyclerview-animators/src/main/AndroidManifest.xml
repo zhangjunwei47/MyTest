@@ -1,2 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest
-  package="jp.wasabeef.recyclerview"/>
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="jp.wasabeef.recyclerview">
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning"
+        >
+        <activity
+            android:name=".demo.MainActivity"
+            android:label="@string/app_name"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".demo.AnimatorSampleActivity"/>
+        <activity android:name=".demo.AdapterSampleActivity"/>
+
+    </application>
+
+</manifest>
