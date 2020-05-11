@@ -37,7 +37,7 @@ public class FirstFragment extends Fragment {
     private void initRecyclerView() {
         firstFragmentAdapter = new FirstFragmentAdapter(R.layout.item_fragment_first);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(firstFragmentAdapter);
+      //  recyclerView.setAdapter(firstFragmentAdapter);
     }
 
     @Override

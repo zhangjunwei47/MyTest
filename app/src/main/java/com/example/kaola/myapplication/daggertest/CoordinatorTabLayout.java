@@ -156,7 +156,7 @@ public class CoordinatorTabLayout extends CoordinatorLayout {
      */
     public CoordinatorTabLayout setupWithViewPager(ViewPager viewPager) {
         setupTabLayout();
-        tl1.setViewPager(viewPager);
+     //   tl1.setViewPager(viewPager);
         return this;
     }
 

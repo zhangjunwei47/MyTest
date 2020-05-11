@@ -19,7 +19,7 @@ ext {
             dagger2Verson           : "2.16"
     ]
     dependencies = [
-            "appcompat-v7"        : 'androidx.appcompat:appcompat:1.0.0',
+            "appcompat-v7"        : 'androidx.appcompat:appcompat:1.1.0',
             "support-v4"          : 'androidx.legacy:legacy-support-v4:1.0.0',
             "recyclerview-v7"     : "com.android.support:recyclerview-v7:${version["androidSupportSdkVersion"]}",
             "annotations"         : 'androidx.annotation:annotation:1.0.0',
