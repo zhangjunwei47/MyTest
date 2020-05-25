@@ -14,7 +14,7 @@ import com.example.kaola.lib.Constants;
  * @Date 2020-05-09 11:14
  * @Version 1.0
  */
-@AppInit(priority = 10, isAsync = true)
+//@AppInit(priority = 10, isAsync = true)
 public class SdkInitializable implements AppInitializable {
     @Override
     public void onCreate(Application application) {

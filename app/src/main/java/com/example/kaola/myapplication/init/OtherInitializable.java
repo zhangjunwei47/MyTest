@@ -14,7 +14,7 @@ import com.example.kaola.lib.Constants;
  * @Date 2020-05-09 11:22
  * @Version 1.0
  */
-@AppInit()
+//@AppInit()
 public class OtherInitializable implements AppInitializable {
     @Override
     public void onCreate(Application application) {

@@ -14,7 +14,7 @@ import com.example.kaola.lib.Constants;
  * @Date 2020-05-09 11:20
  * @Version 1.0
  */
-@AppInit(priority = 40)
+//@AppInit(priority = 40)
 public class PlayerInitializable implements AppInitializable {
     @Override
     public void onCreate(Application application) {
